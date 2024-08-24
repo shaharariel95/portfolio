@@ -1,0 +1,222 @@
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Prevents scrolling */
+    background-image: url('./assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .navbar {
+    width: 80px;
+    height: 100vh; /* Full height to cover the entire left side */
+    background-color: rgba(15, 10, 18, 0.7); /* Semi-transparent */
+    position: absolute;
+    top: 40px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 2; /* Ensures it stays on top of the background */
+  }
+  
+  .topbar {
+    width: calc(100% ); /* Subtracting an additional margin for better fit */
+    height: 40px;
+    background-color: rgba(19, 19, 19, 0.8);
+    color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px; /* Adjusted padding for more space */
+    z-index: 3; /* Ensures it stays on top of the background */
+  }
+  
+  
+  .topbar-center {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; 
+  }
+  
+  .wifi-icon img,
+  .shutdown-icon img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 10px; 
+  }
+  
+  .wifi-icon img:hover,
+  .shutdown-icon img:hover {
+    opacity: 0.7;
+  }
+
+  .wifi-icon img:hover {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  
+  .wifi-icon:hover::after {
+    content: 'Connected to Shahar\'s network 5GHz';
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 4;
+  }
+  
+  .power-menu {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 4;
+    width: 150px;
+  }
+  
+  .menu-item {
+    padding: 10px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .menu-item:hover {
+    background-color: #555;
+  }
+  
+  .menu-item.disabled {
+    color: grey;
+    cursor: not-allowed;
+  }
+  
+  .menu-item.disabled:hover {
+    background-color: #333;
+  }
+  
+  
+  .desktop-content {
+    flex-grow: 1;
+    padding: 10px;
+    margin-left: 80px;
+    margin-top: 40px;
+    z-index: 1; /* Below the navbar and topbar */
+  }
+  
+  .app-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .minimized-indicator {
+    width: 6px;
+    height: 6px;
+    background-color: orange;
+    border-radius: 50%;
+    position: absolute;
+    left: 15px;
+    top: 50px;
+  }
+  
+
+  /* Window CSS */
+
+  .app-window {
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }  
+
+  .window-title-name {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .window-title {
+    display: flex;
+    justify-content: space-between; /* Distribute space between controls and title */
+    align-items: center;
+    background-color: #dddddd;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: #333;
+    padding: 5px 10px;
+    cursor: move;
+    position: relative;
+    height: 30px;
+  }
+  
+  .window-controls {
+    display: flex;
+    gap: 8px; /* Space between the control buttons */
+    justify-content: flex-start; /* Align controls to the left */
+  }
+  
+  .window-title-text {
+    margin-left: auto; /* Push the title to the far right */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1; /* Let the title text take up remaining space */
+  }
+  
+
+.window-control-button {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #bbbbbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.window-control-button:hover {
+  background-color: #efefef; /* Slightly darker on hover */
+}
+
+.window-control-icon {
+  font-size: 10px;
+  color: #333;
+  line-height: 14px;
+}
+  
+  
+.close-button {
+background-color: #ff5f5f;
+border: none;
+color: white;
+font-size: 14px;
+cursor: pointer;
+padding: 4px 8px;
+/* border-radius: 4px; */
+}
+  

@@ -1,0 +1,105 @@
+.vscode-window {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+  }
+  
+  .vscode-folder {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;    
+  }
+
+  .vscoder-folder-name{
+    padding-left: 8px;
+  }
+
+  .vscode-sidebar {
+    width: 170px;
+    min-width: 170px;
+    background-color: #252526;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+  }
+  
+  .folder-toggle-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .folder-toggle-button:hover {
+    background-color: #333333;
+    border-radius: 4px;
+  }
+  
+  .vs-code-files {
+    margin-left: 20px; /* Indent files slightly */
+  }
+  
+
+  .vscode-sidebar button {
+    background: none;
+    border: none;
+    padding: 10px;
+    color: #d4d4d4;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .vscode-sidebar button.active {
+    background-color: #3c3c3c;
+    color: #ffffff;
+  }
+  
+  .vscode-content {
+    flex-grow: 1;
+    width: auto;
+    padding-left: 20px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+  }
+  
+  .code {
+    color: #d4d4d4; /* Default text color */
+  }
+  
+  .code .tag {
+    color: #569cd6;
+  }
+  
+  .code .attribute {
+    color: #9cdcfe;
+  }
+  
+  .code .value {
+    color: #ce9178;
+  }
+  
+  .code .comment {
+    color: #6a9955;
+  }
+  
+  .code .string {
+    color: #ce9178;
+  }
+  
+  .code .keyword {
+    color: #c586c0;
+  }
+  
+  .code .function {
+    color: #dcdcaa;
+  }
+  
