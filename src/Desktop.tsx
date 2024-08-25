@@ -30,8 +30,8 @@ const Desktop: React.FC = () => {
   const [zIndexCounter, setZIndexCounter] = useState(1);
 
   useEffect(() => {
-    // Open the VSCode window by default when the component mounts
-    handleOpenApp('VSCodeWindow');
+    // Open the Browser window by default when the component mounts
+    handleOpenApp('Browser');
   },[]);
 
   const formatDate = (): string => {

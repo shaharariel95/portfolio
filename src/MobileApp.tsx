@@ -1,13 +1,13 @@
 import React from 'react';
-import VSCodeWindow from './VSCodeWindow';
 import MobileWarningPopup from './MobileWarningPopup';
+import Browser from './Browser';
 
 const MobileApp: React.FC = () => {
   return (
     <div>
       <MobileWarningPopup />
       <div className="mobile-view">
-        <VSCodeWindow />
+        <Browser />
       </div>
     </div>
   );

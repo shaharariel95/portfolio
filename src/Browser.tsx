@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Browser.css';
 
 import homeIcon from './assets/home-icon.svg'; // Add the home icon
@@ -51,6 +51,12 @@ const Browser: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false); // State for refresh simulation
 
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setActiveTab(null); // On mobile, start with the homepage view
+    }
+  }, []);
+  
   const openTab = (projectName: string) => {
     if (!openTabs.includes(projectName)) {
       setOpenTabs([...openTabs, projectName]);
@@ -97,7 +103,9 @@ const Browser: React.FC = () => {
                 alt={tab}
                 className="tab-thumbnail"
               />
-              {tab}
+              <span className='tab-name'>  
+                {tab}
+              </span>
               <button onClick={(e) => {
                 e.stopPropagation();
                 closeTab(tab);
@@ -112,7 +120,8 @@ const Browser: React.FC = () => {
         ) : (
           activeTab === null ? (
             <div className="browser-homepage">
-              <h1>Bookmarks</h1>
+              <h2 className='browser-sub-title'>Shahar Ariel</h2>
+              <h1>Projects</h1>
               <div className="history-grid">
                 {projects.map(project => (
                   <div key={project.name} onClick={() => openTab(project.name)}>

@@ -37,6 +37,9 @@
   height: 100%; /* Full height to center the loading message */
 }
 
+.browser-sub-title {
+  display: none;
+}
 
 .browser-tabs {
   display: flex;
@@ -179,4 +182,140 @@
   width: 16px; /* Adjust size as needed */
   height: 16px;
   margin-right: 8px; /* Space between icon and text */
+}
+
+
+
+@media (max-width: 768px) {
+  .browser {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .browser-content {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-grow: 1; /* Make content take the remaining space */
+    overflow-y: auto; /* Enable vertical scrolling for content */
+  }
+
+  .browser-topbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1c1b22;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .browser-sub-title {
+    display:block;
+  }
+
+  .browser-tabs {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling for tabs */
+    flex-grow: 1; /* Allow the tabs to take available space */
+    scrollbar-width: thin; /* For Firefox */
+    -ms-overflow-style: -ms-autohiding-scrollbar; /* For IE and Edge */
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensure the X button stays on the right */
+    max-width: 120px; /* Limit the tab width */
+    padding: 5px 10px;
+    background-color: #44434f;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden; /* Hide overflow text */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    flex-shrink: 0; /* Prevent the tab from shrinking */
+  }
+
+  .tab .tab-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-grow: 1; /* Allow the text to take up the available space */
+  }
+
+  .tab.active {
+    background-color: #5e5e6b;
+    border: 1px solid #ccc;
+  }
+
+  .tab-thumbnail {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    flex-shrink: 0; /* Prevent the thumbnail from shrinking */
+  }
+
+  .tab button {
+    margin-left: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff5f5f;
+    flex-shrink: 0; /* Prevent the X button from shrinking */
+    padding: 0; /* Remove padding around the button */
+  }
+
+  .browser-tabs::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .browser-tabs::-webkit-scrollbar-thumb {
+    background-color: #5e5e6b;
+    border-radius: 10px;
+  }
+
+  .tab-thumbnail {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+
+  .project-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Ensure the project content takes full width */
+  }
+
+  .project-image {
+    max-width: 90%; /* Reduce image size to fit the screen */
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .project-details {
+    width: 100%;
+    text-align: left;
+    padding: 0 10px;
+  }
+
+  .history-item {
+    width: calc(33.33% - 20px); /* Keep history items at 3 per row, with spacing */
+  }
+
+  .history-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }
