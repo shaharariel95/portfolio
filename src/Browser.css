@@ -1,0 +1,182 @@
+.browser {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #2b2a33; /* Background color for the browser */
+  border: 2px solid #1c1b22; /* Separation borders */
+}
+
+.browser-topbar {
+  display: flex;
+  align-items: center;
+  background-color: #1c1b22;
+  padding: 10px;
+}
+
+.refresh-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.home-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #ffffff;
+  height: 100%; /* Full height to center the loading message */
+}
+
+
+.browser-tabs {
+  display: flex;
+  flex-grow: 1;
+  background-color: #2b2a33;
+  padding: 10px;
+  height: 30px;
+}
+
+.tab {
+  padding: 5px 10px;
+  background-color: #44434f;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-width: 200px; /* Limit tab width */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px; /* Space between thumbnail and text */
+}
+
+
+.tab.active {
+  padding: 2px;
+  background-color: #5e5e6b;
+  border: 1px solid #ccc;
+}
+
+.tab button {
+  margin-left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff5f5f;
+  padding-left: 5px;
+}
+
+
+.browser-homepage {
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid layout */
+  gap: 20px; /* Space between items */
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.history-item-container {
+  text-align: center; /* Center the content within each grid item */
+}
+
+.history-item {
+  width: 100px; /* Fixed width */
+  background-color: #44434f; /* Background color for the item */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 auto; /* Center the history item in its container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.history-item-thumbnail {
+  width: 100px; /* Thumbnail size */
+  height: 100px;
+  object-fit: cover; /* Ensure the image covers the area */
+  border-radius: 4px; /* Slight rounding on thumbnail */
+}
+
+.history-item-name {
+  font-size: 14px;
+  color: #ffffff;
+  margin-top: 5px; /* Space between the history item and the name */
+}
+.browser-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100vh - 100px); /* Ensure the content fits within the viewport */
+}
+
+.project-details-container {
+  display: flex; /* Ensure text and image are aligned horizontally */
+  align-items: flex-start; /* Align content to the top */
+}
+
+.project-image {
+  width: 100%;
+  max-width: 200px; /* Reduce the image size */
+  height: auto;
+  margin-right: 20px; /* Space between image and text */
+}
+
+.project-details {
+  flex-grow: 1;
+}
+
+
+.project-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 20px;
+  background-color: #d3d3d3;
+
+}
+
+
+.github-link {
+  display: flex;
+  align-items: center; /* Align icon and text vertically */
+  text-decoration: none; /* Remove underline from link */
+  color: #0366d6; /* GitHub link color */
+}
+
+.github-link:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.github-icon {
+  width: 16px; /* Adjust size as needed */
+  height: 16px;
+  margin-right: 8px; /* Space between icon and text */
+}

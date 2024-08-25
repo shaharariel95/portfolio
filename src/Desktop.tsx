@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import './Desktop.css';
 import AppIcon from './AppIcon';
+import Browser from './Browser';
 import PdfReader from './PdfReader';
-import VSCodeWindow from './VSCodeWindow';  // Import the new VSCodeWindow component
+import VSCodeWindow from './VSCodeWindow';
 import browserIcon from './assets/browser-icon.svg';
 import pdfIcon from './assets/pdf-icon.svg';
 import vscodeIcon from './assets/vscode-icon.svg';
@@ -13,13 +14,25 @@ import minimizeIcon from './assets/minimize-icon.svg';
 import maximizeIcon from './assets/maximize-icon.svg';
 import closeIcon from './assets/close-icon.svg';
 
+interface AppInstance {
+  id: string;
+  app: string;
+  minimized: boolean;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+  zIndex: number;
+  maximized: boolean;
+}
+
+
 const Desktop: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [activeApp, setActiveApp] = useState<string | null>(null);
-  const [isMaximized, setIsMaximized] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [windowSize, setWindowSize] = useState<{ width: number, height: number }>({ width: 600, height: 400 });
-  const [windowPosition, setWindowPosition] = useState<{ x: number, y: number }>({ x: 100, y: 50 });
+  const [openApps, setOpenApps] = useState<AppInstance[]>([]);
+  const [zIndexCounter, setZIndexCounter] = useState(1);
+
+  useEffect(() => {
+    console.log("Current openApps state:", JSON.stringify(openApps));
+  }, [openApps]);
 
   const formatDate = (): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -35,39 +48,125 @@ const Desktop: React.FC = () => {
     setShowMenu(!showMenu);
   };
 
-  const handleMinimize = () => {
-    setIsMinimized(true);
-    setActiveApp(null);
+  const handleOpenApp = (app: string) => {
+    console.log(`Attempting to open app: ${app}`);
+    setOpenApps(prevApps => {
+      const existingApp = prevApps.find(appInstance => appInstance.app === app);
+      if (existingApp) {
+        console.log(`Existing app found: ${JSON.stringify(existingApp)}`);
+        const updatedApps = prevApps.map(appInstance =>
+          appInstance.app === app ? { ...appInstance, minimized: false } : appInstance
+        );
+        console.log(`Updated apps: ${JSON.stringify(updatedApps)}`);
+        
+        // Update zIndex
+        setZIndexCounter(prevZIndex => {
+          const newZIndex = prevZIndex + 1;
+          return newZIndex;
+        });
+  
+        // Focus the app
+        setTimeout(() => handleAppFocus(existingApp.id), 0);
+  
+        return updatedApps;
+      } else {
+        const newAppInstance: AppInstance = {
+          id: `${app}-${Date.now()}`,
+          app,
+          minimized: false,
+          position: { x: 100, y: 50 },
+          size: { width: 800, height: 600 },
+          zIndex: zIndexCounter,
+          maximized: false,
+        };
+        
+        // Update zIndex
+        setZIndexCounter(prevZIndex => prevZIndex + 1);
+  
+        return [...prevApps, newAppInstance];
+      }
+    });
   };
 
-  const handleMaximize = () => {
-    if (isMaximized) {
-      setWindowSize({ width: 600, height: 400 });
-      setWindowPosition({ x: 100, y: 50 });
-    } else {
-      const width = window.innerWidth - 80; // Subtract navbar width
-      const height = window.innerHeight - 40; // Subtract topbar height
-      setWindowSize({ width, height });
-      setWindowPosition({ x: 0, y: 0 }); // Position it below the topbar and to the right of the navbar
+  const handleMinimizeApp = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log(`Minimizing app with id: ${id}`);
+    setOpenApps(prevApps => {
+      const updatedApps = prevApps.map(appInstance =>
+        appInstance.id === id ? { ...appInstance, minimized: true } : appInstance
+      );
+      console.log("Updated apps after minimizing:", JSON.stringify(updatedApps));
+      return updatedApps;
+    });
+  
+    // Focus on the next visible app
+    const visibleApps = openApps.filter(app => !app.minimized && app.id !== id);
+    if (visibleApps.length > 0) {
+      handleAppFocus(visibleApps[visibleApps.length - 1].id);
     }
-    setIsMaximized(!isMaximized);
   };
 
-  const handleClose = () => {
-    setActiveApp(null);
-    setIsMinimized(false);
+  const handleMaximizeApp = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log(`Maximizing app with id: ${id}`);
+    setOpenApps(openApps.map(appInstance => {
+      if (appInstance.id === id) {
+        if (appInstance.maximized) {
+          console.log(`Restoring app with id: ${id}`);
+          return {
+            ...appInstance,
+            size: { width: 800, height: 600 },
+            position: { x: 100, y: 50 },
+            maximized: false,
+          };
+        } else {
+          console.log(`Maximizing app with id: ${id}`);
+          return {
+            ...appInstance,
+            size: { width: window.innerWidth - 80, height: window.innerHeight - 40 },
+            position: { x: 0, y: 0 },
+            maximized: true,
+          };
+        }
+      }
+      return appInstance;
+    }));
+  };
+
+  const handleCloseApp = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log(`Closing app with id: ${id}`);
+    setOpenApps(openApps.filter(appInstance => appInstance.id !== id));
+  };
+
+  const handleAppFocus = (id: string) => {
+    console.log(`Focusing on app with id: ${id}`);
+    setOpenApps(prevApps => prevApps.map(appInstance =>
+      appInstance.id === id ? { ...appInstance, zIndex: zIndexCounter } : appInstance
+    ));
+    setZIndexCounter(prevZIndex => prevZIndex + 1);
+  };
+
+  const updateAppPositionAndSize = (id: string, position: { x: number; y: number }, size: { width: number; height: number }) => {
+    setOpenApps(openApps.map(appInstance =>
+      appInstance.id === id ? { ...appInstance, position, size } : appInstance
+    ));
   };
 
   return (
     <div className="desktop">
       <div className="navbar">
-        <AppIcon icon={browserIcon} label="" />
-        <div className="app-icon-wrapper">
-          {isMinimized && <div className="minimized-indicator"></div>}
-          <AppIcon icon={pdfIcon} label="" onClick={() => { setActiveApp('PDFReader'); setIsMinimized(true); }} />
+          {['Browser', 'PDFReader', 'VSCodeWindow'].map(app => (
+            <div key={app} className="app-icon-wrapper">
+              <AppIcon
+                icon={app === 'Browser' ? browserIcon : app === 'PDFReader' ? pdfIcon : vscodeIcon}
+                label=""
+                onClick={() => handleOpenApp(app)}
+                isMinimized={openApps.some(appInstance => appInstance.app === app)}
+              />
+            </div>
+          ))}
         </div>
-        <AppIcon icon={vscodeIcon} label="" onClick={() => { setActiveApp('VSCodeWindow');  }} />
-      </div>
       <div className="topbar">
         <div className="topbar-center">
           <span>{formatDate()}</span>
@@ -88,127 +187,77 @@ const Desktop: React.FC = () => {
         </div>
       )}
       <div className="desktop-content">
-        {activeApp === 'PDFReader' && (
-          <Rnd
-            size={{ width: windowSize.width, height: windowSize.height }}
-            position={windowPosition}
-            onDragStop={(e, d) => {
-              setWindowPosition({ x: d.x, y: d.y });
-            }}
-            onResizeStop={(e, direction, ref, delta, position) => {
-              setWindowSize({
-                width: parseInt(ref.style.width, 10),
-                height: parseInt(ref.style.height, 10),
-              });
-              setWindowPosition({
-                x: position.x,
-                y: position.y,
-              });
-            }}
-            enableResizing={{
-              top: true,
-              right: true,
-              bottom: true,
-              left: true,
-              topRight: true,
-              bottomRight: true,
-              bottomLeft: true,
-              topLeft: true,
-            }}
-            minWidth={600}
-            minHeight={400}
-            bounds=".desktop"
-            dragHandleClassName="window-title"
-          >
-            <div className="app-window">
-              <div className="window-title">
-              <div className='window-title-name'>
-              <img src={pdfIcon} width={'15px'}/>
-                <div>PDFReader</div>
+        {openApps.map(appInstance => (
+           !appInstance.minimized && (
+            <Rnd
+              key={`${appInstance.id}-${appInstance.size.width}-${appInstance.size.height}-${appInstance.position.x}-${appInstance.position.y}-${appInstance.minimized}-${appInstance.maximized}`}
+              style={{ 
+                zIndex: appInstance.zIndex, 
+                display: appInstance.minimized ? 'none' : 'block',
+                visibility: appInstance.minimized ? 'hidden' : 'visible'
+              }}
+              size={appInstance.size}
+              position={appInstance.position}
+              onDragStop={(e, d) => {
+                if (!appInstance.maximized) {
+                  updateAppPositionAndSize(appInstance.id, { x: d.x, y: Math.max(d.y, 40) }, appInstance.size);
+                }
+              }}
+              onResizeStop={(e, direction, ref, delta, position) => {
+                const newSize = {
+                  width: parseInt(ref.style.width, 10),
+                  height: parseInt(ref.style.height, 10),
+                };
+                updateAppPositionAndSize(appInstance.id, { x: position.x, y: Math.max(position.y, 40) }, newSize);
+              }}
+              enableResizing={{
+                top: !appInstance.maximized,
+                right: !appInstance.maximized,
+                bottom: !appInstance.maximized,
+                left: !appInstance.maximized,
+                topRight: !appInstance.maximized,
+                bottomRight: !appInstance.maximized,
+                bottomLeft: !appInstance.maximized,
+                topLeft: !appInstance.maximized,
+              }}
+              disableDragging={appInstance.maximized}
+              minWidth={300}
+              minHeight={200}
+              bounds=".desktop"
+              dragHandleClassName="window-title"
+              onClick={() => handleAppFocus(appInstance.id)}
+            >
+              <div className="app-window">
+                <div className="window-title">
+                  <div className='window-title-name'>
+                    <img src={appInstance.app === 'Browser' ? browserIcon : appInstance.app === 'PDFReader' ? pdfIcon : vscodeIcon} width={'15px'} />
+                    <div>{appInstance.app}</div>
+                  </div>
+                  <div className="window-controls">
+                    <div className="window-control-button" onClick={(e) => handleMinimizeApp(appInstance.id, e)}>
+                      <span className="window-control-icon">
+                        <img src={minimizeIcon} alt="Minimize" className="window-control-icon" />
+                      </span>
+                    </div>
+                    <div className="window-control-button" onClick={(e) => handleMaximizeApp(appInstance.id, e)}>
+                      <span className="window-control-icon">
+                        <img src={maximizeIcon} alt="Maximize" className="window-control-icon" />
+                      </span>
+                    </div>
+                    <div className="window-control-button" onClick={(e) => handleCloseApp(appInstance.id, e)}>
+                      <span className="window-control-icon">
+                        <img src={closeIcon} alt="Close" className="window-control-icon" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="window-controls">
-                  <div className="window-control-button" onClick={handleMinimize}>
-                    <span className="window-control-icon">
-                      <img src={minimizeIcon} alt="Minimize" className="window-control-icon" />
-                    </span>
-                  </div>
-                  <div className="window-control-button" onClick={handleMaximize}>
-                    <span className="window-control-icon">
-                      <img src={maximizeIcon} alt="Maximize" className="window-control-icon" />
-                    </span>
-                  </div>
-                  <div className="window-control-button" onClick={handleClose}>
-                    <span className="window-control-icon">
-                      <img src={closeIcon} alt="Close" className="window-control-icon" />
-                    </span>
-                  </div>
-                </div>
+                {appInstance.app === 'Browser' && <Browser />}
+                {appInstance.app === 'PDFReader' && <PdfReader />}
+                {appInstance.app === 'VSCodeWindow' && <VSCodeWindow />}
               </div>
-              <PdfReader />
-            </div>
-          </Rnd>
-        )}
-
-        {activeApp === 'VSCodeWindow' && (
-          <Rnd
-            size={{ width: windowSize.width, height: windowSize.height }}
-            position={windowPosition}
-            onDragStop={(e, d) => {
-              setWindowPosition({ x: d.x, y: d.y });
-            }}
-            onResizeStop={(e, direction, ref, delta, position) => {
-              setWindowSize({
-                width: parseInt(ref.style.width, 10),
-                height: parseInt(ref.style.height, 10),
-              });
-              setWindowPosition({
-                x: position.x,
-                y: position.y,
-              });
-            }}
-            enableResizing={{
-              top: true,
-              right: true,
-              bottom: true,
-              left: true,
-              topRight: true,
-              bottomRight: true,
-              bottomLeft: true,
-              topLeft: true,
-            }}
-            minWidth={600}
-            minHeight={400}
-            bounds=".desktop"
-            dragHandleClassName="window-title"
-          >
-            <div className="app-window">
-              <div className="window-title">
-                <div className='window-title-name'>
-                <img src={vscodeIcon} width={'15px'}/>
-                <div>VSCode</div>
-                </div>
-                <div className="window-controls">
-                  <div className="window-control-button" onClick={handleMinimize}>
-                    <span className="window-control-icon">
-                      <img src={minimizeIcon} alt="Minimize" className="window-control-icon" />
-                    </span>
-                  </div>
-                  <div className="window-control-button" onClick={handleMaximize}>
-                    <span className="window-control-icon">
-                      <img src={maximizeIcon} alt="Maximize" className="window-control-icon" />
-                    </span>
-                  </div>
-                  <div className="window-control-button" onClick={handleClose}>
-                    <span className="window-control-icon">
-                      <img src={closeIcon} alt="Close" className="window-control-icon" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <VSCodeWindow />
-            </div>
-          </Rnd>
-        )}
+            </Rnd>
+          )
+        ))}
       </div>
     </div>
   );
