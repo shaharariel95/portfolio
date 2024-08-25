@@ -32,7 +32,7 @@ const Desktop: React.FC = () => {
   useEffect(() => {
     // Open the VSCode window by default when the component mounts
     handleOpenApp('VSCodeWindow');
-  });
+  },[]);
 
   const formatDate = (): string => {
     const options: Intl.DateTimeFormatOptions = {
