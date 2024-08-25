@@ -30,8 +30,6 @@ const Desktop: React.FC = () => {
   const [zIndexCounter, setZIndexCounter] = useState(1);
 
   useEffect(() => {
-    console.log("Current openApps state:", JSON.stringify(openApps));
-
     // Open the VSCode window by default when the component mounts
     handleOpenApp('VSCodeWindow');
   });

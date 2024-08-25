@@ -11,37 +11,37 @@ const projects = [
     name: "SignMyName",
     description: "SignMyName is an application that recognizes Israeli Sign Language (ISL) letter gestures and translates them into text. Using CNN models and Mediapipe image processing, it bridges the gap between the hard of hearing and those who can hear through interactive learning.",
     githubLink: "https://github.com/Sign-My-Name/tkinter",
-    imageUrl: "public/assets/SignMyName-logo.png",
+    imageUrl: "/assets/SignMyName-logo.png",
   },
   {
     name: "Internet Web Services",
     description: "Created and oversaw the IAM of an AB – Test website, while also in charge of the DB and the Data transfers between teams. Worked in Node.js, Express, MongoDB, and React.",
     githubLink: "https://github.com/Iam-Shenkar/IAM_Final",
-    imageUrl: "public/assets/internet-web-services-logo.png",
+    imageUrl: "/assets/internet-web-services-logo.png",
   },
   {
     name: "CSRF + XXS",
     description: "in Cyber Advanced course we implemented and demonstrated the threat of XSS and CSRF token theaft.",
     githubLink: "https://github.com/shaharariel95/cyber-advanced",
-    imageUrl: "public/assets/cookie.png",
+    imageUrl: "/assets/cookie.png",
   },
   {
     name: "Maze-Game",
     description: "Created and implemented an Embbeded maze game with 4 stages and 3 difficulty levels with a MicroChip PIC24 where the controls are the movments of the game board",
     githubLink: "https://github.com/shaharariel95/MazeGame-MicroChip_PIC24FJ256GA705",
-    imageUrl: "public/assets/Maze-Game.jpg",
+    imageUrl: "/assets/Maze-Game.jpg",
   },
   {
     name: "The Chaser",
     description: "Created and implemented the Chaser gameshow in a client-server TCP implementation",
     githubLink: "https://github.com/shaharariel95/The-chase-game",
-    imageUrl: "public/assets/The-Chaser.jpeg",
+    imageUrl: "/assets/The-Chaser.jpeg",
   },
   {
     name: "Compiler",
     description: "Create a Compiler for a madeup language as part of the complier course",
     githubLink: "https://github.com/shaharariel95/AnotherLanguageCompiler",
-    imageUrl: "public/assets/complier.png",
+    imageUrl: "/assets/complier.png",
   },
   // Add more projects as needed
 ];

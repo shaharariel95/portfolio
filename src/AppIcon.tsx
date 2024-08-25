@@ -8,9 +8,7 @@ interface AppIconProps {
   isMinimized?: boolean;
 }
 
-const AppIcon: React.FC<AppIconProps> = ({ icon, label, onClick, isMinimized }) => {
-  console.log(`Rendering AppIcon: ${label}, isMinimized: ${isMinimized}`);
-  
+const AppIcon: React.FC<AppIconProps> = ({ icon, label, onClick, isMinimized }) => {  
   return (
     <div className="app-icon-container" onClick={onClick}>
       <div className="app-icon">
