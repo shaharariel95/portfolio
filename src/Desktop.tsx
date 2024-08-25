@@ -191,13 +191,17 @@ const Desktop: React.FC = () => {
               size={appInstance.size}
               position={appInstance.position}
               onDragStop={(e, d) => {
-                console.log(e)
+                // eslint-disable-next-line no-constant-condition
+                if(false){
+                  console.log(e)}
                 if (!appInstance.maximized) {
                   updateAppPositionAndSize(appInstance.id, { x: d.x, y: Math.max(d.y, 40) }, appInstance.size);
                 }
               }}
               onResizeStop={(e, direction, ref, delta, position) => {
-                console.log(e, direction, delta)
+                // eslint-disable-next-line no-constant-condition
+                if(false){
+                console.log(e, direction, delta)}
                 const newSize = {
                   width: parseInt(ref.style.width, 10),
                   height: parseInt(ref.style.height, 10),

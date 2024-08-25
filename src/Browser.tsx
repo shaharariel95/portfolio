@@ -11,37 +11,37 @@ const projects = [
     name: "SignMyName",
     description: "SignMyName is an application that recognizes Israeli Sign Language (ISL) letter gestures and translates them into text. Using CNN models and Mediapipe image processing, it bridges the gap between the hard of hearing and those who can hear through interactive learning.",
     githubLink: "https://github.com/Sign-My-Name/tkinter",
-    imageUrl: "src/assets/SignMyName-logo.png",
+    imageUrl: "public/assets/SignMyName-logo.png",
   },
   {
     name: "Internet Web Services",
     description: "Created and oversaw the IAM of an AB – Test website, while also in charge of the DB and the Data transfers between teams. Worked in Node.js, Express, MongoDB, and React.",
     githubLink: "https://github.com/Iam-Shenkar/IAM_Final",
-    imageUrl: "src/assets/internet-web-services-logo.png",
+    imageUrl: "public/assets/internet-web-services-logo.png",
   },
   {
     name: "CSRF + XXS",
     description: "in Cyber Advanced course we implemented and demonstrated the threat of XSS and CSRF token theaft.",
     githubLink: "https://github.com/shaharariel95/cyber-advanced",
-    imageUrl: "src/assets/cookie.png",
+    imageUrl: "public/assets/cookie.png",
   },
   {
     name: "Maze-Game",
     description: "Created and implemented an Embbeded maze game with 4 stages and 3 difficulty levels with a MicroChip PIC24 where the controls are the movments of the game board",
     githubLink: "https://github.com/shaharariel95/MazeGame-MicroChip_PIC24FJ256GA705",
-    imageUrl: "src/assets/Maze-Game.jpg",
+    imageUrl: "public/assets/Maze-Game.jpg",
   },
   {
     name: "The Chaser",
     description: "Created and implemented the Chaser gameshow in a client-server TCP implementation",
     githubLink: "https://github.com/shaharariel95/The-chase-game",
-    imageUrl: "src/assets/The-Chaser.jpeg",
+    imageUrl: "public/assets/The-Chaser.jpeg",
   },
   {
     name: "Compiler",
     description: "Create a Compiler for a madeup language as part of the complier course",
     githubLink: "https://github.com/shaharariel95/AnotherLanguageCompiler",
-    imageUrl: "src/assets/complier.png",
+    imageUrl: "public/assets/complier.png",
   },
   // Add more projects as needed
 ];

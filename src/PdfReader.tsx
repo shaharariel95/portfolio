@@ -5,7 +5,7 @@ import './PdfReader.css';
 const PdfReader: React.FC = () => {
   return (
     <div className="pdf-reader">
-      <iframe src='public/assets/cv.pdf' width="100%" height="100%" title="cv"></iframe>
+      <iframe src='/assets/cv.pdf' width="100%" height="100%" title="cv"></iframe>
     </div>
   );
 };
