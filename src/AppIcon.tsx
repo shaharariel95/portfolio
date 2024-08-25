@@ -1,4 +1,5 @@
 import React from 'react';
+import './AppIcon.css'
 
 interface AppIconProps {
   icon: string;

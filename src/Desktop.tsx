@@ -24,7 +24,6 @@ interface AppInstance {
   maximized: boolean;
 }
 
-
 const Desktop: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [openApps, setOpenApps] = useState<AppInstance[]>([]);
@@ -32,7 +31,10 @@ const Desktop: React.FC = () => {
 
   useEffect(() => {
     console.log("Current openApps state:", JSON.stringify(openApps));
-  }, [openApps]);
+
+    // Open the VSCode window by default when the component mounts
+    handleOpenApp('VSCodeWindow');
+  }, []);
 
   const formatDate = (): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -49,15 +51,12 @@ const Desktop: React.FC = () => {
   };
 
   const handleOpenApp = (app: string) => {
-    console.log(`Attempting to open app: ${app}`);
     setOpenApps(prevApps => {
       const existingApp = prevApps.find(appInstance => appInstance.app === app);
       if (existingApp) {
-        console.log(`Existing app found: ${JSON.stringify(existingApp)}`);
         const updatedApps = prevApps.map(appInstance =>
           appInstance.app === app ? { ...appInstance, minimized: false } : appInstance
         );
-        console.log(`Updated apps: ${JSON.stringify(updatedApps)}`);
         
         // Update zIndex
         setZIndexCounter(prevZIndex => {
@@ -90,12 +89,10 @@ const Desktop: React.FC = () => {
 
   const handleMinimizeApp = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Minimizing app with id: ${id}`);
     setOpenApps(prevApps => {
       const updatedApps = prevApps.map(appInstance =>
         appInstance.id === id ? { ...appInstance, minimized: true } : appInstance
       );
-      console.log("Updated apps after minimizing:", JSON.stringify(updatedApps));
       return updatedApps;
     });
   
@@ -108,11 +105,9 @@ const Desktop: React.FC = () => {
 
   const handleMaximizeApp = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Maximizing app with id: ${id}`);
     setOpenApps(openApps.map(appInstance => {
       if (appInstance.id === id) {
         if (appInstance.maximized) {
-          console.log(`Restoring app with id: ${id}`);
           return {
             ...appInstance,
             size: { width: 800, height: 600 },
@@ -120,7 +115,6 @@ const Desktop: React.FC = () => {
             maximized: false,
           };
         } else {
-          console.log(`Maximizing app with id: ${id}`);
           return {
             ...appInstance,
             size: { width: window.innerWidth - 80, height: window.innerHeight - 40 },
@@ -135,12 +129,10 @@ const Desktop: React.FC = () => {
 
   const handleCloseApp = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Closing app with id: ${id}`);
     setOpenApps(openApps.filter(appInstance => appInstance.id !== id));
   };
 
   const handleAppFocus = (id: string) => {
-    console.log(`Focusing on app with id: ${id}`);
     setOpenApps(prevApps => prevApps.map(appInstance =>
       appInstance.id === id ? { ...appInstance, zIndex: zIndexCounter } : appInstance
     ));
@@ -156,17 +148,17 @@ const Desktop: React.FC = () => {
   return (
     <div className="desktop">
       <div className="navbar">
-          {['Browser', 'PDFReader', 'VSCodeWindow'].map(app => (
-            <div key={app} className="app-icon-wrapper">
-              <AppIcon
-                icon={app === 'Browser' ? browserIcon : app === 'PDFReader' ? pdfIcon : vscodeIcon}
-                label=""
-                onClick={() => handleOpenApp(app)}
-                isMinimized={openApps.some(appInstance => appInstance.app === app)}
-              />
-            </div>
-          ))}
-        </div>
+        {['Browser', 'PDFReader', 'VSCodeWindow'].map(app => (
+          <div key={app} className="app-icon-wrapper">
+            <AppIcon
+              icon={app === 'Browser' ? browserIcon : app === 'PDFReader' ? pdfIcon : vscodeIcon}
+              label=""
+              onClick={() => handleOpenApp(app)}
+              isMinimized={openApps.some(appInstance => appInstance.app === app)}
+            />
+          </div>
+        ))}
+      </div>
       <div className="topbar">
         <div className="topbar-center">
           <span>{formatDate()}</span>
@@ -188,7 +180,7 @@ const Desktop: React.FC = () => {
       )}
       <div className="desktop-content">
         {openApps.map(appInstance => (
-           !appInstance.minimized && (
+          !appInstance.minimized && (
             <Rnd
               key={`${appInstance.id}-${appInstance.size.width}-${appInstance.size.height}-${appInstance.position.x}-${appInstance.position.y}-${appInstance.minimized}-${appInstance.maximized}`}
               style={{ 

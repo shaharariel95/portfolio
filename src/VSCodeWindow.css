@@ -103,3 +103,33 @@
     color: #dcdcaa;
   }
   
+
+  @media only screen and (max-width: 768px) {
+    .vscode-window {
+        width: 100vw;
+        height: 100vh;
+        position: relative; /* Static to ensure it doesn't move */
+        padding: 0;
+        border: none;
+        display: block;
+        overflow: hidden;
+    }
+
+    .vscode-sidebar {
+        width: 100%; /* Full width on mobile */
+        height: auto; /* Adjust height */
+        padding: 10px;
+        overflow-y: auto;
+    }
+
+    .vscode-content {
+        padding: 20px;
+        height: calc(100vh - 60px); /* Adjust height to fit the screen */
+        overflow-y: auto; /* Scrollable content */
+        white-space: pre-wrap;
+    }
+
+    .folder-toggle-button, .vscode-sidebar button {
+        width: 100%;
+    }
+}
