@@ -31,7 +31,7 @@ const Desktop: React.FC = () => {
 
   useEffect(() => {
     // Open the Browser window by default when the component mounts
-    handleOpenApp('Browser');
+    handleOpenApp('VSCodeWindow');
   },[]);
 
   const formatDate = (): string => {
