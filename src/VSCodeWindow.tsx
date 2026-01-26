@@ -19,50 +19,58 @@ const VSCodeWindow: React.FC = () => {
     switch (activeFile) {
       case 'index.html':
         return (
-            <pre className="code">
+          <pre className="code">
             <span className="tag">&lt;section <span className='attribute'>class</span>=<span className='string'>"experience-section"</span>&gt;</span>
             <br />
-            &nbsp;&nbsp;<span className="tag">&lt;h1 <span className='attribute'>class</span>=<span className='string'>"experience-title"</span>&gt;</span>Experience<span className="tag">&lt;/h1&gt;</span>
+              <span className="tag">&lt;h1 <span className='attribute'>class</span>=<span className='string'>"experience-title"</span>&gt;</span>Experience<span className="tag">&lt;/h1&gt;</span>
             <br />
-            &nbsp;&nbsp;<span className="tag">&lt;div <span className='attribute'>class</span>=<span className='string'>"experience-content"</span>&gt;</span>
+              <span className="tag">&lt;div <span className='attribute'>class</span>=<span className='string'>"experience-content"</span>&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2023 - 2024<span className="tag">&lt;/h2&gt;</span>
+                <span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2024 - 2026<span className="tag">&lt;/h2&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Uniper-care<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Empowering older adults through connected and active living. */ </span>
+                <span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Tomax<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Digital assessment platform for online examinations. */ </span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;ul <span className='attribute'>class</span>=<span className='string'>"job-details"</span>&gt;</span>
+                <span className="tag">&lt;ul <span className='attribute'>class</span>=<span className='string'>"job-details"</span>&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;li&gt;</span><span className="attribute">Role:</span> Full Stack Developer<span className="tag">&lt;/li&gt;</span>
+                  <span className="tag">&lt;li&gt;</span><span className="attribute">Role:</span> Full Stack Developer<span className="tag">&lt;/li&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;li&gt;</span>Responsible for developing and integrating new features to enhance and maintain the platform capabilities, utilizing NodeJS, Angular, Vue, and MongoDB.<span className="tag">&lt;/li&gt;</span>
+                  <span className="tag">&lt;li&gt;</span>Developed an online examination system using Vue.js, PHP, and Electron, including AI-based question generation using AWS Bedrock and BI analytics layers.<span className="tag">&lt;/li&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;/ul&gt;</span>
+                <span className="tag">&lt;/ul&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2021 – 2022<span className="tag">&lt;/h2&gt;</span>
+                <span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2023 - 2024<span className="tag">&lt;/h2&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Percepto Robotics<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Autonomous inspection & monitoring for industrial sites. */ </span>
+                <span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Uniper-care<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Empowering older adults through connected and active living. */ </span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;ul <span className='attribute'>class</span>=<span className='string'>"job-details"</span>&gt;</span>
+                <span className="tag">&lt;ul <span className='attribute'>class</span>=<span className='string'>"job-details"</span>&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;li&gt;</span><span className="attribute">Role:</span> Technical Support<span className="tag">&lt;/li&gt;</span>
+                  <span className="tag">&lt;li&gt;</span><span className="attribute">Role:</span> Full Stack Developer<span className="tag">&lt;/li&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;li&gt;</span>Solving software and hardware problems in the company products for clients worldwide. Work with Linux environment, log analysis and extraction in Bash terminal.<span className="tag">&lt;/li&gt;</span>
+                  <span className="tag">&lt;li&gt;</span>Responsible for developing and integrating new features to enhance and maintain the platform capabilities, utilizing NodeJS, Angular, Vue, and MongoDB.<span className="tag">&lt;/li&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;/ul&gt;</span>
+                <span className="tag">&lt;/ul&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className='tag'>&lt;div&gt;</span>
+                <span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2021 – 2022<span className="tag">&lt;/h2&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2020 – 2019<span className="tag">&lt;/h2&gt;</span>
+                <span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Percepto Robotics<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Autonomous inspection & monitoring for industrial sites. */ </span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Kedma Ltd. Moshav Idan<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Marketing and export management. */</span>
+                <span className="tag">&lt;ul <span className='attribute'>class</span>=<span className='string'>"job-details"</span>&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2016 – 2017<span className="tag">&lt;/h2&gt;</span>
+                  <span className="tag">&lt;li&gt;</span><span className="attribute">Role:</span> Technical Support<span className="tag">&lt;/li&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Elbit System<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Manually tested software while serving in the IDF. */</span>
+                  <span className="tag">&lt;li&gt;</span>Solving software and hardware problems in the company products for clients worldwide. Work with Linux environment, log analysis and extraction in Bash terminal.<span className="tag">&lt;/li&gt;</span>
             <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;<span className='tag'>&lt;/div&gt;</span>
+                <span className="tag">&lt;/ul&gt;</span>
             <br />
-            &nbsp;&nbsp;<span className="tag">&lt;/div&gt;</span>
+                <span className='tag'>&lt;div&gt;</span>
+            <br />
+                  <span className="tag">&lt;h2 <span className='attribute'>class</span>=<span className='string'>"job-duration"</span>&gt;</span>2016 – 2017<span className="tag">&lt;/h2&gt;</span>
+            <br />
+                  <span className="tag">&lt;h3 <span className='attribute'>class</span>=<span className='string'>"job-title"</span>&gt;</span>Elbit System<span className="tag">&lt;/h3&gt;</span> <span className='comment'>/* Manually tested software while serving in the IDF. */</span>
+            <br />
+                <span className='tag'>&lt;/div&gt;</span>
+            <br />
+              <span className="tag">&lt;/div&gt;</span>
             <br />
             <span className="tag">&lt;/section&gt;</span>
           </pre>
