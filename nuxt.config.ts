@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   // Static site generation for Cloudflare Pages
   ssr: true,
   nitro: {
+    preset: 'cloudflare-pages',
     prerender: {
       crawlLinks: true,
       routes: ['/', '/experience', '/projects', '/contact', '/terminal']
