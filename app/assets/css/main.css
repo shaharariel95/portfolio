@@ -1,0 +1,285 @@
+/* ========================================
+   Portfolio V2 — Terminal Theme
+   ======================================== */
+
+/* --- CSS Variables / Theme --- */
+:root {
+    /* Background */
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1c2128;
+    --bg-card: #1c2128;
+    --bg-hover: #252c35;
+    --bg-input: #0d1117;
+
+    /* Text */
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --text-link: #58a6ff;
+    --text-heading: #e6edf3;
+
+    /* Accent — terminal green */
+    --accent: #3fb950;
+    --accent-dim: #238636;
+    --accent-glow: rgba(63, 185, 80, 0.15);
+
+    /* Accent secondary — cyan */
+    --accent-secondary: #58a6ff;
+    --accent-secondary-dim: #1f6feb;
+
+    /* Borders */
+    --border-primary: #30363d;
+    --border-secondary: #21262d;
+
+    /* Terminal */
+    --terminal-prompt: #3fb950;
+    --terminal-command: #e6edf3;
+    --terminal-path: #58a6ff;
+    --terminal-error: #f85149;
+    --terminal-warning: #d29922;
+
+    /* Tags */
+    --tag-bg: rgba(56, 139, 253, 0.1);
+    --tag-text: #58a6ff;
+    --tag-border: rgba(56, 139, 253, 0.3);
+
+    /* Fonts */
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    /* Sizing */
+    --max-width: 820px;
+    --header-height: 56px;
+
+    /* Radius */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    /* Transitions */
+    --transition-fast: 120ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
+}
+
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--text-link);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--accent-secondary);
+    text-decoration: underline;
+}
+
+::selection {
+    background-color: var(--accent-dim);
+    color: var(--text-heading);
+}
+
+
+/* --- Typography --- */
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-mono);
+    color: var(--text-heading);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 1.75rem;
+}
+
+h2 {
+    font-size: 1.35rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+}
+
+h4 {
+    font-size: 0.95rem;
+}
+
+code,
+pre,
+.mono {
+    font-family: var(--font-mono);
+}
+
+
+/* --- Utility --- */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* --- Page transitions --- */
+.page-enter-active,
+.page-leave-active {
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.page-enter-from {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+.page-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+
+/* --- Tag / Token --- */
+.tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border: 1px solid var(--tag-border);
+    border-radius: var(--radius-sm);
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+
+/* --- Card --- */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card:hover {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+
+/* --- Caret blink animation --- */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.15em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+    :root {
+        --max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    h2 {
+        font-size: 1.15rem;
+    }
+
+    .container {
+        padding: 0 var(--space-md);
+    }
+}
