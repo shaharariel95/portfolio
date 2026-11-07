@@ -19,6 +19,17 @@
             <figcaption>{{ study.video.caption }}</figcaption>
         </figure>
 
+        <div v-if="study.images?.length" class="study-gallery">
+            <figure v-for="img in study.images" :key="img.src" class="shot">
+                <a :href="img.src" target="_blank" rel="noopener" :aria-label="`Open full size: ${img.caption}`">
+                    <img :src="img.src" :width="img.width" :height="img.height" :alt="img.alt" loading="lazy"
+                        decoding="async" />
+                </a>
+                <figcaption>{{ img.caption }}</figcaption>
+            </figure>
+            <p class="shot-note">Grower and picker names in these screenshots are made up.</p>
+        </div>
+
         <section v-if="study.problem?.length" class="study-section" aria-labelledby="problem-h">
             <h2 id="problem-h" class="section-title"><span class="hash">#</span>{{ study.problemTitle ?? 'The problem' }}</h2>
             <ul class="bullets">
@@ -151,6 +162,42 @@ useHead({
 .study-link {
     font-family: var(--font-mono);
     font-size: 0.85rem;
+}
+
+.study-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.shot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    background: var(--bg-secondary);
+    transition: border-color var(--transition-fast);
+}
+
+.shot a:hover img {
+    border-color: var(--accent-dim);
+}
+
+.shot figcaption,
+.shot-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.shot-note {
+    font-style: italic;
 }
 
 .study-video {

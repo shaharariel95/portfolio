@@ -13,6 +13,8 @@ export interface CaseStudy {
     links?: { label: string; url: string }[]
     /** Short muted demo clip (mp4) + poster, shown under the header */
     video?: { src: string; poster: string; caption: string }
+    /** Screenshots (own products only — never employer screens) */
+    images?: { src: string; width: number; height: number; alt: string; caption: string }[]
     problemTitle?: string
     problem?: string[]
     /** Short label on cards, e.g. "Tomax" or "Own product" */
@@ -73,6 +75,18 @@ export const featured: CaseStudy[] = [
             'The system a mango sorting warehouse runs its season on: pallet intake and weighing, shipping certificates and a live cold-room map — built for the people on the floor, on tablets, in Hebrew.',
         role: 'Designed, built and run it end to end, working directly with the sorting center that uses it.',
         links: [{ label: 'GitHub ↗', url: 'https://github.com/shaharariel95/TsuberMango' }],
+        images: [
+            {
+                src: '/media/tsubermango-dashboard.webp', width: 1600, height: 945,
+                alt: 'TsuberMango dashboard in Hebrew: season totals, the latest pallets, and a card per grower with pallets, crates, weight and pallets waiting to ship',
+                caption: 'The dashboard: season totals, latest pallets and a card per grower.'
+            },
+            {
+                src: '/media/tsubermango-fridge.webp', width: 1600, height: 947,
+                alt: 'TsuberMango cold-room map: a 5×8 grid of fridge slots with pallets placed in some of them, and a pick list of pallets grouped by grower',
+                caption: 'The cold-room map: drag pallets from the list into fridge slots; every tablet sees it live.'
+            }
+        ],
         problemTitle: 'Why it started on Google Sheets',
         problem: [
             'The warehouse already ran on spreadsheets, and a new system had to earn its place mid-season without breaking that.',
