@@ -9,6 +9,26 @@
             </div>
         </div>
 
+        <!-- Featured (closed-source) work -->
+        <section class="featured" aria-label="Featured work">
+            <NuxtLink v-for="f in featured" :key="f.slug" :to="`/projects/${f.slug}`" class="featured-card card">
+                <div class="featured-top">
+                    <span class="featured-badge">featured · {{ f.company }}</span>
+                    <span class="repo-arrow">→</span>
+                </div>
+                <h2 class="featured-name">{{ f.name }}</h2>
+                <p class="featured-tagline">{{ f.tagline }}</p>
+                <div class="tags">
+                    <span v-for="t in f.stack.slice(0, 5)" :key="t" class="tag">{{ t }}</span>
+                </div>
+            </NuxtLink>
+        </section>
+
+        <div class="section-header github-header">
+            <span class="prompt">$</span>
+            <span class="command">ls ~/github</span>
+        </div>
+
         <!-- Loading state -->
         <div v-if="loading" class="loading-state">
             <div class="loading-dots">
@@ -56,6 +76,7 @@
 
 <script setup lang="ts">
 import { cvData } from '~/utils/cv'
+import { featured } from '~/utils/featured'
 
 useHead({
     title: `Projects — ${cvData.name}`
@@ -110,6 +131,58 @@ function langColor(lang: string): string {
 
 .command {
     color: var(--terminal-command);
+}
+
+/* Featured */
+.featured {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+}
+
+.featured-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: inherit;
+    border-color: var(--accent-dim);
+}
+
+.featured-card:hover {
+    text-decoration: none;
+}
+
+.featured-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.featured-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+}
+
+.featured-card:hover .repo-arrow {
+    opacity: 1;
+}
+
+.featured-name {
+    font-size: 1.15rem;
+}
+
+.featured-tagline {
+    font-size: 0.87rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex: 1;
+}
+
+.github-header {
+    margin-bottom: var(--space-lg);
 }
 
 /* Grid */
@@ -289,7 +362,8 @@ function langColor(lang: string): string {
 }
 
 @media (max-width: 640px) {
-    .repos-grid {
+    .repos-grid,
+    .featured {
         grid-template-columns: 1fr;
     }
 }

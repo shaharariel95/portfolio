@@ -1,5 +1,6 @@
 import { cvData } from '~/utils/cv'
 import { projectConfig } from '~/utils/projects.config'
+import { featured } from '~/utils/featured'
 
 interface TerminalLine {
     type: 'input' | 'output' | 'error' | 'ascii'
@@ -17,7 +18,27 @@ const FILES = {
     'projects': 'DIR'
 }
 
+for (const f of featured) (FILES as Record<string, string>)[`${f.slug}.md`] = `study:${f.slug}`
+
 export const CV_URL = '/cv.pdf'
+
+function caseStudy(slug: string): string[] {
+    const f = featured.find(x => x.slug === slug)
+    if (!f) return []
+    const lines = [`# ${f.name} — ${f.company}`, '', f.tagline, '', `role: ${f.role}`, '']
+    if (f.problem?.length) {
+        lines.push('## The problem')
+        for (const p of f.problem) lines.push(`  ▸ ${p}`)
+        lines.push('')
+    }
+    lines.push(`## ${f.flowTitle}`)
+    f.flow.forEach((s, i) => lines.push(`  ${i + 1}. ${s.title.padEnd(14)} ${s.detail}`))
+    lines.push('', '## What I built')
+    for (const b of f.built) lines.push(`  ▸ ${b}`)
+    lines.push('', `stack: ${f.stack.join(', ')}`, '', `// ${f.note}`)
+    if (f.publicUrl) lines.push(`// ${f.publicUrl}`)
+    return lines
+}
 
 function openCv() {
     if (import.meta.client) window.open(CV_URL, '_blank', 'noopener')
@@ -45,7 +66,8 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
     ],
 
     ls: () => [
-        'about.txt  skills.md  experience.log  education.log  contact.txt  cv.pdf  projects/'
+        ['about.txt', 'skills.md', 'experience.log', 'education.log', 'contact.txt', 'cv.pdf',
+            ...featured.map(f => `${f.slug}.md`), 'projects/'].join('  ')
     ],
 
     cat: (args) => {
@@ -57,6 +79,7 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         if (!target) return [`cat: ${file}: No such file or directory`]
         if (target === 'DIR') return [`cat: ${file}: Is a directory`]
         if (target === 'cv') return ['cat: cv.pdf: binary file — try "cv" or "open cv.pdf" instead']
+        if (target.startsWith('study:')) return caseStudy(target.slice(6))
 
         // Execute the command mapped to the file
         const cmdHandler = COMMANDS[target]
@@ -113,7 +136,14 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
     },
 
     projects: () => {
-        const lines: string[] = ['Featured Projects:', '']
+        const lines: string[] = ['Featured Work:', '']
+        for (const f of featured) {
+            lines.push(`  ★ ${f.name}  (${f.company})`)
+            lines.push(`     ${f.tagline}`)
+            lines.push(`     → cat ${f.slug}.md  ·  shaharariel.dev/projects/${f.slug}`)
+            lines.push('')
+        }
+        lines.push('Projects:', '')
         const projs = cvData.projects || []
         for (const p of projs) {
             lines.push(`  📌 ${p.name}`)

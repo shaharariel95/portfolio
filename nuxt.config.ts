@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     preset: 'cloudflare-pages',
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/experience', '/projects', '/contact', '/terminal']
+      routes: ['/', '/experience', '/projects', '/contact', '/terminal', '/projects/vivago', '/projects/companion-app']
     }
   },
 

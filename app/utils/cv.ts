@@ -4,7 +4,7 @@ export const cvData: CVData = {
     name: "Shahar Ariel",
     role: "Full Stack & Mobile Developer",
     summary:
-        "Full Stack Developer with 3+ years of production experience building web and mobile applications, AI-powered products and large-scale assessment platforms. At Tomax I took an AI-powered oral-defense product from proof of concept to commercial launch in 3 months as its sole developer, and I'm the company's sole mobile developer. Experienced in Vue.js, PHP, React Native, AWS and production LLM integrations.",
+        "Full Stack Developer with 3+ years of production experience building web and mobile applications, AI-powered products and large-scale assessment platforms. At Tomax I took an AI-powered oral-defense product from proof of concept to commercial launch as its sole developer, and I'm the company's sole mobile developer. Experienced in Vue.js, PHP, React Native, AWS and production LLM integrations.",
     location: "Israel",
     contact: {
         email: "ShaharAriel95@gmail.com",
@@ -43,10 +43,10 @@ export const cvData: CVData = {
             role: "Full Stack Developer",
             dates: "2024 – Present",
             bullets: [
-                "VivaGo (sole developer): took Tomax's AI-powered oral-defense product — students defend their submitted work in short video answers — from internal proof of concept to commercial launch in about 3 months.",
+                "VivaGo (sole developer): took Tomax's AI-powered oral-defense product — students defend their submitted work in short video answers — from internal proof of concept to commercial launch.",
                 "Implemented AI-powered question and weighted-rubric generation, per-answer summaries, originality scoring and Bloom's taxonomy classification, on a provider-agnostic speech-to-text layer (Azure and AWS).",
                 "Sole developer of Tomax's React Native companion app (iOS & Android), owning features, maintenance and App Store / Google Play releases — used for second-camera exam monitoring and scanning handwritten work.",
-                "Designed VivaGo's database and the data contracts connecting it to Tomax's existing systems (question editor, TomaETest exam delivery, grading and reporting), and built the student defense flow and instructor report.",
+                "Designed VivaGo's database and the data contracts connecting it to the company's existing assessment platform (authoring, exam delivery, grading and reporting), and built the student defense flow and instructor report.",
                 "Developed and maintained a large-scale exam platform (tens of thousands of exams and hundreds of thousands of candidate sessions a year) using Vue.js, Electron, PHP, MySQL and AWS.",
                 "Integrated AI-driven question generation and rewriting with AWS Bedrock, and built analytics and BI pipelines over high-volume exam data."
             ]
