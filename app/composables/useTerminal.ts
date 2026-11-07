@@ -36,7 +36,7 @@ function caseStudy(slug: string): string[] {
     lines.push('', '## What I built')
     for (const b of f.built) lines.push(`  ▸ ${b}`)
     lines.push('', `stack: ${f.stack.join(', ')}`, '', `// ${f.note}`)
-    if (f.publicUrl) lines.push(`// ${f.publicUrl}`)
+    for (const l of f.links ?? []) lines.push(`// ${l.url}`)
     return lines
 }
 

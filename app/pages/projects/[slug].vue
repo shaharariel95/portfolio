@@ -12,9 +12,10 @@
             <h1 class="study-name">{{ study.name }}</h1>
             <p class="study-tagline">{{ study.tagline }}</p>
             <p class="study-role"><span class="label">role:</span> {{ study.role }}</p>
-            <a v-if="study.publicUrl" :href="study.publicUrl" target="_blank" rel="noopener" class="study-link">
-                Product page ↗
-            </a>
+            <div v-if="study.links?.length" class="study-links">
+                <a v-for="l in study.links" :key="l.url" :href="l.url" target="_blank" rel="noopener"
+                    class="study-link">{{ l.label }}</a>
+            </div>
         </header>
 
         <section v-if="study.problem?.length" class="study-section" aria-labelledby="problem-h">
@@ -131,10 +132,15 @@ useHead({
     color: var(--accent);
 }
 
+.study-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+}
+
 .study-link {
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    align-self: flex-start;
 }
 
 .study-section {
