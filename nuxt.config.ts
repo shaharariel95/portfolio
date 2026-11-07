@@ -28,7 +28,12 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Shahar Ariel — Full Stack & Mobile Developer' },
         { property: 'og:description', content: 'Full Stack & Mobile Developer — production systems, JavaScript ecosystems, cloud platforms.' },
         { property: 'og:url', content: 'https://shaharariel.dev' },
-        { name: 'twitter:card', content: 'summary' }
+        { property: 'og:image', content: 'https://shaharariel.dev/og-image.png' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Shahar Ariel — Full Stack & Mobile Developer' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:image', content: 'https://shaharariel.dev/og-image.png' }
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
