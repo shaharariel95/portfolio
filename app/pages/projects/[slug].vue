@@ -13,6 +13,12 @@
             </div>
         </header>
 
+        <figure v-if="study.video" class="study-video">
+            <video ref="videoRef" :src="study.video.src" :poster="study.video.poster" muted loop playsinline
+                preload="metadata" controls :aria-label="study.video.caption" />
+            <figcaption>{{ study.video.caption }}</figcaption>
+        </figure>
+
         <section v-if="study.problem?.length" class="study-section" aria-labelledby="problem-h">
             <h2 id="problem-h" class="section-title"><span class="hash">#</span>{{ study.problemTitle ?? 'The problem' }}</h2>
             <ul class="bullets">
@@ -66,6 +72,16 @@ const next = featured[(index + 1) % featured.length]
 if (!study) {
     throw createError({ statusCode: 404, statusMessage: 'No such file or directory', fatal: true })
 }
+
+// Autoplay the demo (muted) unless the visitor prefers reduced motion — then it waits for Play
+const videoRef = ref<HTMLVideoElement | null>(null)
+onMounted(() => {
+    const v = videoRef.value
+    if (!v) return
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        v.play().catch(() => { /* autoplay blocked: controls are there */ })
+    }
+})
 
 useHead({
     title: `${study.name} — ${cvData.name}`,
@@ -128,6 +144,25 @@ useHead({
 .study-link {
     font-family: var(--font-mono);
     font-size: 0.85rem;
+}
+
+.study-video {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.study-video video {
+    width: 100%;
+    aspect-ratio: 1502 / 976;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    background: var(--bg-secondary);
+}
+
+.study-video figcaption {
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 .study-section {

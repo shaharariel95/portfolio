@@ -11,6 +11,8 @@ export interface CaseStudy {
     tagline: string
     role: string
     links?: { label: string; url: string }[]
+    /** Short muted demo clip (mp4) + poster, shown under the header */
+    video?: { src: string; poster: string; caption: string }
     problemTitle?: string
     problem?: string[]
     /** Short label on cards, e.g. "Tomax" or "Own product" */
@@ -129,6 +131,11 @@ export const featured: CaseStudy[] = [
             'A desktop app that teaches children Israeli Sign Language through real-time webcam gesture recognition. Final project of my B.Sc. — grade 95, top project in the class.',
         role: 'Lead developer of the application, in a team of three.',
         links: [{ label: 'GitHub ↗', url: 'https://github.com/Sign-My-Name' }],
+        video: {
+            src: '/media/signmyname-demo.mp4',
+            poster: '/media/signmyname-poster.jpg',
+            caption: 'Learning the letter ש: the app shows the sign, reads the webcam, and confirms when it recognises it.'
+        },
         flowTitle: 'How recognition works',
         flowStyle: 'steps',
         flow: [
