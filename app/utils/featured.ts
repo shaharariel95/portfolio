@@ -13,6 +13,8 @@ export interface CaseStudy {
     links?: { label: string; url: string }[]
     /** Short muted demo clip (mp4) + poster, shown under the header */
     video?: { src: string; poster: string; caption: string }
+    /** Card picture; cards without one show a small terminal panel of the flow instead */
+    thumb?: string
     /** Screenshots (own products only — never employer screens) */
     images?: { src: string; width: number; height: number; alt: string; caption: string }[]
     problemTitle?: string
@@ -75,6 +77,7 @@ export const featured: CaseStudy[] = [
             'The system a mango sorting warehouse runs its season on: pallet intake and weighing, shipping certificates and a live cold-room map — built for the people on the floor, on tablets, in Hebrew.',
         role: 'Designed, built and run it end to end, working directly with the sorting center that uses it.',
         links: [{ label: 'GitHub ↗', url: 'https://github.com/shaharariel95/TsuberMango' }],
+        thumb: '/media/tsubermango-dashboard.webp',
         images: [
             {
                 src: '/media/tsubermango-dashboard.webp', width: 1600, height: 945,
@@ -106,15 +109,15 @@ export const featured: CaseStudy[] = [
             'A Vue 3 + Tailwind app designed for warehouse tablets, fully in Hebrew (RTL), with Hebrew PDF generation for stickers and certificates.',
             'An Express API on Google Cloud Run with Firebase Auth; every write goes through the backend, while clients read live updates gated by Firestore security rules.',
             'The repository layer that made the Sheets → Firestore migration a swap rather than a rewrite.',
-            'Real-time sync with echo suppression, so two tablets — even on the same account — see each other\'s changes immediately.',
-            'Operational safety for a business that can\'t lose a season: weight sanity checks, soft delete with an audit log, all-or-nothing scheduled backups, and dry-run-by-default restore and reset tools.',
+            'Real-time sync across tablets through Firestore listeners instead of WebSockets, so the Cloud Run backend can scale to zero between bursts of work.',
+            'Operational safety for a business that can\'t lose a season: an audit trail, soft delete and restore, versioned shipping certificates, and scheduled Cloud Storage backups with a non-destructive restore tool.',
             'Tests at every level: unit tests (Vitest), API tests against the Firebase emulators, and Playwright end-to-end tests including a tablet viewport.'
         ],
         outcome: [
             'The sorting floor\'s day-to-day system: pallets go through it from intake and weighing to the shipping certificate.',
             'Replaced the spreadsheet workflow step by step, with the farmers keeping their data the whole way.'
         ],
-        stack: ['Vue 3', 'Tailwind CSS', 'Node.js', 'Express', 'Firestore', 'Firebase Auth', 'Cloud Run', 'Google Sheets API', 'Playwright', 'Vitest'],
+        stack: ['Vue 3', 'Tailwind CSS', 'Node.js', 'Express', 'Firestore', 'Firebase Auth', 'Cloud Run', 'Cloud Storage', 'Docker', 'Google Sheets API', 'Playwright', 'Vitest'],
         note: 'Open source. Built for a real sorting center and used through the mango season; business details are kept general.'
     },
     {
@@ -157,6 +160,7 @@ export const featured: CaseStudy[] = [
             'A desktop app that teaches children Israeli Sign Language through real-time webcam gesture recognition. Final project of my B.Sc. — grade 95, top project in the class.',
         role: 'Lead developer of the application, in a team of three.',
         links: [{ label: 'GitHub ↗', url: 'https://github.com/Sign-My-Name' }],
+        thumb: '/media/signmyname-poster.jpg',
         video: {
             src: '/media/signmyname-demo.mp4',
             poster: '/media/signmyname-poster.jpg',

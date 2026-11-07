@@ -1,5 +1,14 @@
 <template>
     <NuxtLink :to="`/projects/${study.slug}`" class="featured-card card">
+        <div class="media" aria-hidden="true">
+            <img v-if="study.thumb" :src="study.thumb" alt="" loading="lazy" decoding="async" />
+            <div v-else class="flow-panel">
+                <span class="flow-cmd"><span class="prompt">$</span> {{ study.slug }} --flow</span>
+                <span v-for="(s, i) in study.flow" :key="s.title" class="flow-line">
+                    <span class="flow-n">{{ i + 1 }}</span> {{ s.title.toLowerCase() }}
+                </span>
+            </div>
+        </div>
         <div class="featured-top">
             <span class="featured-badge">{{ study.badge }}</span>
             <span class="featured-arrow" aria-hidden="true">→</span>
@@ -25,6 +34,60 @@ defineProps<{ study: CaseStudy }>()
     gap: var(--space-sm);
     text-decoration: none;
     color: inherit;
+    overflow: hidden;
+}
+
+/* Picture area: same height on every card so the grid stays even */
+.media {
+    margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-xs);
+    aspect-ratio: 16 / 7;
+    border-bottom: 1px solid var(--border-primary);
+    background: var(--bg-secondary);
+    overflow: hidden;
+}
+
+.media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform var(--transition-slow);
+}
+
+.featured-card:hover .media img {
+    transform: scale(1.03);
+}
+
+.flow-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
+    padding: var(--space-md) var(--space-lg);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    background:
+        radial-gradient(120% 90% at 100% 0%, var(--accent-glow), transparent 60%),
+        var(--bg-secondary);
+}
+
+.flow-cmd {
+    color: var(--terminal-command);
+    margin-bottom: 0.25rem;
+}
+
+.flow-cmd .prompt {
+    color: var(--terminal-prompt);
+    font-weight: 700;
+}
+
+.flow-n {
+    color: var(--accent);
+    display: inline-block;
+    width: 1.2em;
 }
 
 .featured-card:hover {

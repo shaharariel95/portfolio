@@ -32,6 +32,8 @@ export interface CVData {
     name: string
     role: string
     degree: string
+    employer: string
+    years: string
     tagline: string
     /** One line under the tagline: the pattern across the featured work */
     pattern: string

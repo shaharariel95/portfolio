@@ -9,7 +9,9 @@ export const cvData: CVData = {
     name: 'Shahar Ariel',
     role: 'Full Stack & Mobile Developer',
     degree: 'B.Sc. in Software Engineering',
-    tagline: 'Usually the only developer on what I build — from first commit to production.',
+    employer: 'Tomax',
+    years: '3+ years',
+    tagline: 'I take products from proof of concept to production — and keep them running.',
     pattern: 'Three products in production right now, each built and run by me alone: two at Tomax, one of my own.',
     experienceLead: '3+ years building production web, mobile and AI products.',
     summary:
@@ -24,11 +26,11 @@ export const cvData: CVData = {
     },
     skillGroups: [
         { label: 'Languages', items: ['JavaScript (ES6+)', 'PHP', 'Python', 'SQL', 'HTML5', 'CSS3'] },
-        { label: 'Frontend & Mobile', items: ['Vue.js', 'React Native', 'Angular', 'Electron'] },
-        { label: 'Backend', items: ['Node.js', 'REST APIs', 'MVC', 'OOP'] },
-        { label: 'Databases', items: ['MySQL', 'MongoDB', 'DynamoDB'] },
-        { label: 'Cloud & AI', items: ['AWS (Lambda, ECS, EC2, S3, SQS, CloudWatch, Bedrock)', 'Azure Speech Services', 'LLM integration'] },
-        { label: 'Tools', items: ['Git', 'Linux', 'Bash', 'Twilio', 'App Store Connect', 'Google Play Console'] }
+        { label: 'Frontend & Mobile', items: ['Vue.js', 'React Native', 'Angular', 'Electron', 'Tailwind CSS'] },
+        { label: 'Backend', items: ['Node.js', 'Express', 'REST APIs', 'MVC', 'OOP'] },
+        { label: 'Databases', items: ['MySQL', 'MongoDB', 'DynamoDB', 'Firestore'] },
+        { label: 'Cloud & AI', items: ['AWS (Lambda, ECS, EC2, S3, SQS, CloudWatch, Bedrock)', 'Google Cloud (Cloud Run, Cloud Storage, Cloud Scheduler)', 'Firebase (Auth, Hosting)', 'Azure Speech Services', 'LLM integration'] },
+        { label: 'Tools', items: ['Vitest', 'Playwright', 'Git', 'Docker', 'Linux', 'Bash', 'Twilio', 'App Store Connect', 'Google Play Console'] }
     ],
     experience: [
         {
@@ -41,7 +43,7 @@ export const cvData: CVData = {
                     bullets: [
                         'Took VivaGo, Tomax\'s AI-powered oral-defense product in which students defend their submitted work in short video answers, from internal proof of concept to commercial launch.',
                         'Implemented AI-powered question and weighted-rubric generation, per-answer summaries, originality scoring and Bloom\'s taxonomy classification. Maintain the provider-agnostic speech-to-text integration supporting both Azure and AWS.',
-                        'Designed the database and the data contracts connecting VivaGo to Tomax\'s existing systems (authoring, exam delivery, and grading and reporting), and built the student defense flow and instructor report on top of them.'
+                        'Designed the database and the data contracts connecting VivaGo to Tomax\'s existing systems (question editor, exam delivery client, and grading and reporting), and built the student defense flow and instructor report on top of them.'
                     ]
                 },
                 {
@@ -74,10 +76,10 @@ export const cvData: CVData = {
             ]
         },
         {
-            company: 'Kedma Ltd.',
-            role: 'Marketing & Export Management',
-            dates: '2019 – 2020',
-            bullets: ['Managed international marketing and export operations.'],
+            company: 'Mitchashvim',
+            role: 'Volunteer, alongside studies',
+            dates: '2020 – 2021',
+            bullets: ['Coordinated the acquisition and distribution of computers.'],
             earlier: true
         },
         {
@@ -85,8 +87,7 @@ export const cvData: CVData = {
             role: 'Faculty Instructor, Command-and-Control Systems',
             dates: '2016 – 2017',
             bullets: [
-                'Responsible for bringing a new command-and-control system into use across the Armored Corps, and trained soldiers on it.',
-                'Worked with Elbit Systems developers to test each update before release, documenting the changes and turning them into training material.'
+                'Brought a new command-and-control system into use across the Armored Corps and trained soldiers on it, testing each update with Elbit Systems developers before release and turning the changes into training material.'
             ],
             earlier: true
         },

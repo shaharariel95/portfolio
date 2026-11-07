@@ -49,7 +49,7 @@
         </section>
 
         <section class="section" aria-labelledby="earlier-h">
-            <h2 id="earlier-h" class="section-title"><span class="hash">#</span>Earlier</h2>
+            <h2 id="earlier-h" class="section-title"><span class="hash">#</span>Volunteering &amp; military service</h2>
             <ul class="earlier">
                 <li v-for="(job, i) in earlier" :key="i">
                     <span class="dates">{{ job.dates }}</span>

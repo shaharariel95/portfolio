@@ -4,7 +4,8 @@
         <section class="hero" aria-label="Introduction">
             <p class="hero-prompt"><span class="prompt">$</span> whoami</p>
             <h1 class="name">{{ cvData.name }}</h1>
-            <p class="role">{{ cvData.role }} <span class="role-sep">·</span> <span class="degree">{{ cvData.degree }}</span></p>
+            <p class="role">{{ cvData.role }} at {{ cvData.employer }}</p>
+            <p class="meta">{{ cvData.years }} <span class="sep">·</span> {{ cvData.degree }} <span class="sep">·</span> {{ cvData.location }}</p>
             <p class="tagline">{{ cvData.tagline }}</p>
 
             <p class="pattern">{{ cvData.pattern }}</p>
@@ -92,8 +93,13 @@ useHead({
     color: var(--accent);
 }
 
-.role-sep,
-.degree {
+.meta {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.meta .sep {
     color: var(--text-muted);
 }
 
