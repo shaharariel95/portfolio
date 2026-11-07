@@ -11,8 +11,16 @@ const FILES = {
     'about.txt': 'whoami',
     'skills.md': 'skills',
     'experience.log': 'experience',
+    'education.log': 'education',
     'contact.txt': 'contact',
+    'cv.pdf': 'cv',
     'projects': 'DIR'
+}
+
+export const CV_URL = '/cv.pdf'
+
+function openCv() {
+    if (import.meta.client) window.open(CV_URL, '_blank', 'noopener')
 }
 
 const COMMANDS: Record<string, (args?: string[]) => string[]> = {
@@ -24,18 +32,20 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         '  whoami       — display user profile',
         '  skills       — list technical skills',
         '  experience   — show work history',
+        '  education    — show education',
         '  projects     — list featured projects',
         '  contact      — show contact info',
+        '  cv           — open / download my CV (PDF)',
         '  clear        — clear terminal',
         '  date         — show current date/time',
         '  echo [text]  — print text',
         '  sudo         — execute a command as another user',
         '',
-        'Type a command and press Enter.'
+        'Tip: Tab autocompletes, ↑/↓ browse history, Ctrl+L clears.'
     ],
 
     ls: () => [
-        'about.txt  skills.md  experience.log  contact.txt  projects/'
+        'about.txt  skills.md  experience.log  education.log  contact.txt  cv.pdf  projects/'
     ],
 
     cat: (args) => {
@@ -46,6 +56,7 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         const target = FILES[file as keyof typeof FILES]
         if (!target) return [`cat: ${file}: No such file or directory`]
         if (target === 'DIR') return [`cat: ${file}: Is a directory`]
+        if (target === 'cv') return ['cat: cv.pdf: binary file — try "cv" or "open cv.pdf" instead']
 
         // Execute the command mapped to the file
         const cmdHandler = COMMANDS[target]
@@ -89,6 +100,18 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         return lines
     },
 
+    education: () => {
+        const lines: string[] = []
+        for (const ed of cvData.education || []) {
+            lines.push(`┌─ ${ed.degree}`)
+            lines.push(`│  ${ed.school}  (${ed.dates})`)
+            if (ed.note) lines.push(`│  ▸ ${ed.note}`)
+            lines.push('└───────────────────────────────')
+            lines.push('')
+        }
+        return lines
+    },
+
     projects: () => {
         const lines: string[] = ['Featured Projects:', '']
         const projs = cvData.projects || []
@@ -100,11 +123,9 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         }
         const pinned = projectConfig.pinned || []
         for (const name of pinned) {
-            if (!projs.find(p => p.name === name)) {
-                // Special case for SignMyName if renamed in UI logic
-                let displayName = name
-                if (name === 'Sign-My-Name/tkinter') displayName = 'SignMyName'
-
+            // Special case for SignMyName (repo is Sign-My-Name/tkinter)
+            const displayName = name === 'Sign-My-Name/tkinter' ? 'SignMyName' : name
+            if (!projs.find(p => p.name === displayName)) {
                 lines.push(`  ⭐ ${displayName}`)
                 lines.push(`     → github.com/${name.includes('/') ? name : 'shaharariel95/' + name}`)
                 lines.push('')
@@ -148,6 +169,19 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         return [`cd: no such file or directory: ${dir}`]
     },
 
+    cv: () => {
+        openCv()
+        return [`Opening CV… (if nothing happened, download it from ${CV_URL})`]
+    },
+
+    open: (args) => {
+        const target = args?.[0]
+        if (!target) return ['Usage: open [file]']
+        if (target === 'cv.pdf' || target === 'cv') return COMMANDS.cv!()
+        if (target in FILES) return [`open: ${target}: try "cat ${target}"`]
+        return [`open: ${target}: No such file or directory`]
+    },
+
     exit: () => ['Login session closed. (Re-open tab to reset)']
 }
 
@@ -174,7 +208,7 @@ export function useTerminal() {
         commandHistory.value.unshift(trimmed)
         historyIndex.value = -1
 
-        const parts = trimmed.split(' ')
+        const parts = trimmed.split(/\s+/)
         const cmd = parts[0]?.toLowerCase() ?? ''
         const args = parts.slice(1)
 
@@ -219,10 +253,39 @@ export function useTerminal() {
         }
     }
 
+    /** Tab completion for command names and file arguments */
+    function complete() {
+        const raw = input.value
+        const parts = raw.split(/\s+/)
+        const isFirst = parts.length <= 1
+        const partial = parts[parts.length - 1] ?? ''
+        const pool = isFirst ? Object.keys(COMMANDS).concat('clear') : Object.keys(FILES)
+        const matches = pool.filter(c => c.startsWith(partial)).sort()
+
+        if (matches.length === 1) {
+            parts[parts.length - 1] = matches[0]!
+            input.value = parts.join(' ') + (isFirst ? ' ' : '')
+        } else if (matches.length > 1) {
+            // Extend to the longest common prefix, otherwise list the options
+            let prefix = matches[0]!
+            for (const m of matches) {
+                while (!m.startsWith(prefix)) prefix = prefix.slice(0, -1)
+            }
+            if (prefix.length > partial.length) {
+                parts[parts.length - 1] = prefix
+                input.value = parts.join(' ')
+            } else {
+                history.value.push({ type: 'input', text: `$ ${raw}` })
+                history.value.push({ type: 'output', text: matches.join('  ') })
+            }
+        }
+    }
+
     return {
         history,
         input,
         execute,
-        navigateHistory
+        navigateHistory,
+        complete
     }
 }

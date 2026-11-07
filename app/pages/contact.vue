@@ -36,6 +36,14 @@
                 </div>
             </a>
 
+            <a href="/cv.pdf" target="_blank" rel="noopener" class="contact-item card">
+                <span class="contact-icon">↓</span>
+                <div>
+                    <h3 class="contact-label">CV</h3>
+                    <span class="contact-value">cv.pdf</span>
+                </div>
+            </a>
+
             <a :href="cvData.contact.website" target="_blank" rel="noopener" class="contact-item card">
                 <span class="contact-icon">◎</span>
                 <div>

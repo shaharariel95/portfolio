@@ -17,6 +17,10 @@
                         <span class="nav-slash">/</span>{{ link.label }}
                     </NuxtLink>
                 </li>
+                <li>
+                    <a href="/cv.pdf" target="_blank" rel="noopener" class="nav-link nav-cv"
+                        @click="mobileOpen = false">cv.pdf<span class="nav-cv-icon" aria-hidden="true">↓</span></a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -107,6 +111,20 @@ watch(() => route.path, () => {
     background: var(--accent-glow);
 }
 
+.nav-cv {
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+}
+
+.nav-cv:hover {
+    color: var(--text-heading);
+    background: var(--accent-glow);
+}
+
+.nav-cv-icon {
+    margin-left: 0.3em;
+}
+
 .nav-slash {
     color: var(--text-muted);
     margin-right: 1px;
@@ -183,14 +201,21 @@ watch(() => route.path, () => {
         gap: 0;
         transform: translateY(-100%);
         opacity: 0;
+        visibility: hidden;
         pointer-events: none;
-        transition: transform var(--transition-slow), opacity var(--transition-slow);
+        transition: transform var(--transition-slow), opacity var(--transition-slow), visibility 0s linear var(--transition-slow);
     }
 
     .nav-links.open {
         transform: translateY(0);
         opacity: 1;
+        visibility: visible;
         pointer-events: auto;
+        transition: transform var(--transition-slow), opacity var(--transition-slow), visibility 0s;
+    }
+
+    .nav-cv {
+        border: none;
     }
 
     .nav-link {

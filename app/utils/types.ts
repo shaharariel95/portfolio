@@ -12,6 +12,13 @@ export interface Experience {
     bullets: string[]
 }
 
+export interface Education {
+    degree: string
+    school: string
+    dates: string
+    note?: string
+}
+
 export interface Project {
     name: string
     description: string
@@ -27,6 +34,7 @@ export interface CVData {
     contact: ContactInfo
     skills: string[]
     experience: Experience[]
+    education: Education[]
     projects: Project[]
 }
 

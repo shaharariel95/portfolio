@@ -31,6 +31,31 @@
                 </div>
             </article>
         </div>
+
+        <section class="education" aria-label="Education">
+            <div class="section-header">
+                <span class="prompt">$</span>
+                <span class="command">cat education.log</span>
+            </div>
+            <article v-for="(ed, i) in cvData.education" :key="i" class="job card">
+                <div class="job-top">
+                    <div>
+                        <h2 class="company">{{ ed.degree }}</h2>
+                        <p class="position">{{ ed.school }}</p>
+                    </div>
+                    <span class="dates">{{ ed.dates }}</span>
+                </div>
+                <ul v-if="ed.note" class="bullets">
+                    <li>{{ ed.note }}</li>
+                </ul>
+            </article>
+        </section>
+
+        <div class="cv-row">
+            <a href="/cv.pdf" target="_blank" rel="noopener" class="cv-link">
+                <span class="prompt">$</span> open cv.pdf <span class="caret" />
+            </a>
+        </div>
     </div>
 </template>
 
@@ -128,6 +153,30 @@ useHead({
     position: absolute;
     left: 0;
     color: var(--accent);
+}
+
+/* Education + CV link */
+.education {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+}
+
+.cv-row {
+    margin-top: var(--space-xl);
+}
+
+.cv-link {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.cv-link:hover {
+    color: var(--accent);
+    text-decoration: none;
 }
 
 /* Separator */

@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   },
 
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
       title: 'Shahar Ariel — Full Stack Developer',
@@ -21,9 +22,16 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Full Stack & Mobile Developer — production systems, JavaScript ecosystems, cloud platforms.' },
-        { name: 'theme-color', content: '#0d1117' }
+        { name: 'theme-color', content: '#0d1117' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Shahar Ariel' },
+        { property: 'og:title', content: 'Shahar Ariel — Full Stack & Mobile Developer' },
+        { property: 'og:description', content: 'Full Stack & Mobile Developer — production systems, JavaScript ecosystems, cloud platforms.' },
+        { property: 'og:url', content: 'https://shaharariel.dev' },
+        { name: 'twitter:card', content: 'summary' }
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

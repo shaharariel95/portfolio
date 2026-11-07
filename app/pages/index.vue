@@ -49,8 +49,11 @@
         <!-- CTA -->
         <div class="cta-row">
             <NuxtLink to="/experience" class="cta-link">
-                <span class="prompt">$</span> cd /experience <span class="caret" />
+                <span class="prompt">$</span> cd /experience
             </NuxtLink>
+            <a href="/cv.pdf" target="_blank" rel="noopener" class="cta-link cta-cv">
+                <span class="prompt">$</span> open cv.pdf <span class="caret" />
+            </a>
         </div>
     </div>
 </template>
@@ -73,7 +76,20 @@ useHead({
 }
 
 /* Terminal prompt blocks */
-.terminal-block,
+.terminal-block {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.terminal-line {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
 .section-header {
     font-family: var(--font-mono);
     font-size: 0.9rem;
@@ -179,6 +195,9 @@ useHead({
 /* CTA */
 .cta-row {
     margin-top: var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-xl);
 }
 
 .cta-link {
