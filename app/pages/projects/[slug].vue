@@ -27,7 +27,7 @@
                 </a>
                 <figcaption>{{ img.caption }}</figcaption>
             </figure>
-            <p class="shot-note">Grower and picker names in these screenshots are made up.</p>
+            <p class="shot-note">Grower names in these screenshots are made up.</p>
         </div>
 
         <section v-if="study.problem?.length" class="study-section" aria-labelledby="problem-h">
