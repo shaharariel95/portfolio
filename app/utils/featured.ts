@@ -65,6 +65,7 @@ export const featured: CaseStudy[] = [
         tagline:
             'The system a mango sorting warehouse runs its season on: pallet intake and weighing, shipping certificates and a live cold-room map — built for the people on the floor, on tablets, in Hebrew.',
         role: 'Designed, built and run it end to end, working directly with the sorting center that uses it.',
+        links: [{ label: 'GitHub ↗', url: 'https://github.com/shaharariel95/TsuberMango' }],
         problemTitle: 'Why it started on Google Sheets',
         problem: [
             'The warehouse already ran on spreadsheets, and a new system had to earn its place mid-season without breaking that.',
@@ -89,7 +90,7 @@ export const featured: CaseStudy[] = [
             'Tests at every level: unit tests (Vitest), API tests against the Firebase emulators, and Playwright end-to-end tests including a tablet viewport.'
         ],
         stack: ['Vue 3', 'Tailwind CSS', 'Node.js', 'Express', 'Firestore', 'Firebase Auth', 'Cloud Run', 'Google Sheets API', 'Playwright', 'Vitest'],
-        note: 'Built for a real sorting center and used through the mango season. Business details are kept general.'
+        note: 'Open source. Built for a real sorting center and used through the mango season; business details are kept general.'
     },
     {
         slug: 'tomax-vix',
