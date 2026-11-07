@@ -44,6 +44,13 @@
             </ul>
         </section>
 
+        <section v-if="study.outcome?.length" class="study-section" aria-labelledby="outcome-h">
+            <h2 id="outcome-h" class="section-title"><span class="hash">#</span>Outcome</h2>
+            <ul class="bullets outcome">
+                <li v-for="(o, i) in study.outcome" :key="i">{{ o }}</li>
+            </ul>
+        </section>
+
         <section class="study-section" aria-labelledby="stack-h">
             <h2 id="stack-h" class="section-title"><span class="hash">#</span>Stack</h2>
             <div class="tags">
@@ -249,6 +256,14 @@ useHead({
     font-family: var(--font-mono);
     font-size: 0.85rem;
     color: var(--text-muted);
+}
+
+.outcome li {
+    color: var(--text-primary);
+}
+
+.outcome li::before {
+    content: '✓';
 }
 
 .study-note {

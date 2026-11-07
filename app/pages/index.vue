@@ -7,9 +7,7 @@
             <p class="role">{{ cvData.role }} <span class="role-sep">·</span> <span class="degree">{{ cvData.degree }}</span></p>
             <p class="tagline">{{ cvData.tagline }}</p>
 
-            <ul class="proof" aria-label="Highlights">
-                <li v-for="(p, i) in cvData.proofPoints" :key="i">{{ p }}</li>
-            </ul>
+            <p class="pattern">{{ cvData.pattern }}</p>
 
             <div class="hero-actions">
                 <a href="/cv.pdf" target="_blank" rel="noopener" class="btn btn-primary">Download CV</a>
@@ -107,28 +105,11 @@ useHead({
     margin-top: var(--space-md);
 }
 
-.proof {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-    max-width: 640px;
-}
-
-.proof li {
-    position: relative;
-    padding-left: 1.3rem;
+.pattern {
     font-size: 0.95rem;
     color: var(--text-secondary);
-    line-height: 1.55;
-}
-
-.proof li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
+    line-height: 1.6;
+    max-width: 620px;
 }
 
 .hero-actions {

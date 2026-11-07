@@ -33,7 +33,10 @@ export interface CVData {
     role: string
     degree: string
     tagline: string
-    proofPoints: string[]
+    /** One line under the tagline: the pattern across the featured work */
+    pattern: string
+    /** One-line intro for the experience page */
+    experienceLead: string
     summary: string
     location: string
     languages: string

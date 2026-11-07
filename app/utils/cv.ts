@@ -9,12 +9,9 @@ export const cvData: CVData = {
     name: 'Shahar Ariel',
     role: 'Full Stack & Mobile Developer',
     degree: 'B.Sc. in Software Engineering',
-    tagline: 'I build and ship whole products — web, mobile and AI — and keep them running in production.',
-    proofPoints: [
-        'Sole developer of VivaGo, Tomax\'s AI-powered oral-defense product — from proof of concept to commercial product.',
-        'Sole mobile developer of Tomax Vix, the company\'s iOS & Android exam companion app.',
-        'Built TsuberMango, the system a mango sorting warehouse runs its season on.'
-    ],
+    tagline: 'Usually the only developer on what I build — from first commit to production.',
+    pattern: 'Three products in production right now, each built and run by me alone: two at Tomax, one of my own.',
+    experienceLead: '3+ years building production web, mobile and AI products.',
     summary:
         'Full Stack Developer with 3+ years of production experience building web and mobile applications, AI-powered products and large-scale assessment platforms. At Tomax, took an AI-powered oral-defense product from proof of concept to commercial launch as its sole developer, and serve as the company\'s sole mobile developer. Experienced in Vue.js, PHP, React Native, AWS and production LLM integrations.',
     location: 'Israel',

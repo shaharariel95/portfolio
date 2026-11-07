@@ -22,6 +22,8 @@ export interface CaseStudy {
     flowStyle: 'steps' | 'grid'
     flow: { title: string; detail: string }[]
     built: string[]
+    /** Where it stands / what it achieved — closes the story */
+    outcome?: string[]
     stack: string[]
     note: string
 }
@@ -55,6 +57,9 @@ export const featured: CaseStudy[] = [
             'A provider-agnostic speech-to-text layer, so Azure and AWS are interchangeable behind one interface.',
             'The database design and the data contracts that plug VivaGo into the company\'s existing assessment platform.',
             'The student defense flow and the instructor report built on top of them.'
+        ],
+        outcome: [
+            'Launched as a commercial Tomax product, with a public product page and sales underway.'
         ],
         stack: ['Vue.js', 'PHP', 'MySQL', 'AWS', 'Azure Speech', 'LLMs'],
         note: 'Closed-source product. Details here come from Tomax\'s public product page; screens and internals are confidential.'
@@ -91,6 +96,10 @@ export const featured: CaseStudy[] = [
             'Operational safety for a business that can\'t lose a season: weight sanity checks, soft delete with an audit log, all-or-nothing scheduled backups, and dry-run-by-default restore and reset tools.',
             'Tests at every level: unit tests (Vitest), API tests against the Firebase emulators, and Playwright end-to-end tests including a tablet viewport.'
         ],
+        outcome: [
+            'The sorting floor\'s day-to-day system: pallets go through it from intake and weighing to the shipping certificate.',
+            'Replaced the spreadsheet workflow step by step, with the farmers keeping their data the whole way.'
+        ],
         stack: ['Vue 3', 'Tailwind CSS', 'Node.js', 'Express', 'Firestore', 'Firebase Auth', 'Cloud Run', 'Google Sheets API', 'Playwright', 'Vitest'],
         note: 'Open source. Built for a real sorting center and used through the mango season; business details are kept general.'
     },
@@ -118,6 +127,9 @@ export const featured: CaseStudy[] = [
             'Owning the full mobile lifecycle on a single React Native codebase for iOS and Android.',
             'Shipping and maintaining releases through App Store Connect and Google Play Console, including store review.',
             'Keeping the app in step with the desktop exam platform it extends.'
+        ],
+        outcome: [
+            'Live on the App Store and Google Play, used by candidates during real exams.'
         ],
         stack: ['React Native', 'iOS', 'Android', 'App Store Connect', 'Google Play Console'],
         note: 'Closed-source product. Details here come from its public store listings; internals are confidential.'
@@ -150,6 +162,10 @@ export const featured: CaseStudy[] = [
             'An auto-update mechanism that pulls new model versions from GitHub, so improved models reach users without a reinstall.',
             'Trained on a self-collected dataset of 50,000+ images and evaluated through a 62-participant user study.',
             'Presented and defended before an academic committee that included an ML expert.'
+        ],
+        outcome: [
+            'Grade 95 and the top project in the class.',
+            'Validated with 62 participants in a user study.'
         ],
         stack: ['Python', 'TensorFlow', 'OpenCV', 'MediaPipe', 'CNN', 'Tkinter'],
         note: 'Open source (MIT).'

@@ -4,7 +4,9 @@
 
         <header class="page-header">
             <h1 class="page-title">Experience</h1>
-            <p class="page-lead">{{ cvData.summary }}</p>
+            <p class="page-lead">
+                {{ cvData.experienceLead }} Full detail in the <a href="/cv.pdf" target="_blank" rel="noopener">CV (PDF)</a>.
+            </p>
         </header>
 
         <section class="timeline" aria-label="Work experience">
