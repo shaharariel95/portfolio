@@ -2,75 +2,23 @@
     <div class="projects-page">
         <ShellBreadcrumb />
 
-        <div class="page-header">
-            <div class="section-header">
-                <span class="prompt">$</span>
-                <span class="command">ls ~/projects</span>
-            </div>
-        </div>
+        <header class="page-header">
+            <h1 class="page-title">Projects</h1>
+            <p class="page-lead">Things I've built and shipped. Each one opens a short case study.</p>
+        </header>
 
-        <!-- Featured (closed-source) work -->
-        <section class="featured" aria-label="Featured work">
-            <NuxtLink v-for="f in featured" :key="f.slug" :to="`/projects/${f.slug}`" class="featured-card card">
-                <div class="featured-top">
-                    <span class="featured-badge">featured · {{ f.company }}</span>
-                    <span class="repo-arrow">→</span>
-                </div>
-                <h2 class="featured-name">{{ f.name }}</h2>
-                <p class="featured-tagline">{{ f.tagline }}</p>
-                <div class="tags">
-                    <span v-for="t in f.stack.slice(0, 5)" :key="t" class="tag">{{ t }}</span>
-                </div>
-            </NuxtLink>
+        <section class="featured-grid" aria-label="Featured work">
+            <FeaturedCard v-for="f in featured" :key="f.slug" :study="f" />
         </section>
 
-        <div class="section-header github-header">
-            <span class="prompt">$</span>
-            <span class="command">ls ~/github</span>
-        </div>
-
-        <!-- Loading state -->
-        <div v-if="loading" class="loading-state">
-            <div class="loading-dots">
-                <span /><span /><span />
+        <a :href="`https://github.com/${cvData.contact.github}`" target="_blank" rel="noopener" class="more-link card">
+            <span class="more-icon" aria-hidden="true">⌥</span>
+            <div>
+                <h2 class="more-title">More on GitHub</h2>
+                <p class="more-sub">github.com/{{ cvData.contact.github }} — coursework, experiments and side projects</p>
             </div>
-            <p class="loading-text">Fetching repositories…</p>
-        </div>
-
-        <!-- Error state -->
-        <div v-else-if="error" class="error-state card">
-            <p class="error-text">
-                <span class="error-marker">ERR!</span> {{ error }}
-            </p>
-            <button class="retry-btn" @click="fetchRepos">
-                <span class="prompt">$</span> retry
-            </button>
-        </div>
-
-        <!-- Repos grid -->
-        <div v-else class="repos-grid">
-            <a v-for="repo in repos" :key="repo.id" :href="repo.html_url" target="_blank" rel="noopener"
-                class="repo-card card">
-                <div class="repo-top">
-                    <div class="repo-name-row">
-                        <span v-if="isPinned(repo.name)" class="pin-badge" title="Pinned">📌</span>
-                        <h3 class="repo-name">{{ repo.name }}</h3>
-                    </div>
-                    <span class="repo-arrow">↗</span>
-                </div>
-
-                <p v-if="repo.description" class="repo-desc">{{ repo.description }}</p>
-
-                <div class="repo-meta">
-                    <span v-if="repo.language" class="repo-lang">
-                        <span class="lang-dot" :style="{ background: langColor(repo.language) }" />
-                        {{ repo.language }}
-                    </span>
-                    <span v-if="repo.stargazers_count" class="repo-stat">★ {{ repo.stargazers_count }}</span>
-                    <span v-if="repo.forks_count" class="repo-stat">⑂ {{ repo.forks_count }}</span>
-                </div>
-            </a>
-        </div>
+            <span class="more-arrow" aria-hidden="true">↗</span>
+        </a>
     </div>
 </template>
 
@@ -81,289 +29,63 @@ import { featured } from '~/utils/featured'
 useHead({
     title: `Projects — ${cvData.name}`
 })
-
-const { repos, loading, error, fetchRepos, isPinned } = useGitHub()
-
-onMounted(() => {
-    fetchRepos()
-})
-
-const langColors: Record<string, string> = {
-    TypeScript: '#3178c6',
-    JavaScript: '#f1e05a',
-    Vue: '#41b883',
-    Python: '#3572A5',
-    C: '#555555',
-    'Jupyter Notebook': '#DA5B0B',
-    CSS: '#563d7c',
-    Yacc: '#4B6C4B',
-    Java: '#b07219',
-    HTML: '#e34c26'
-}
-
-function langColor(lang: string): string {
-    return langColors[lang] || '#8b949e'
-}
 </script>
 
 <style scoped>
 .projects-page {
     display: flex;
     flex-direction: column;
+    gap: var(--space-xl);
 }
 
-.page-header {
-    margin-bottom: var(--space-xl);
-}
-
-.section-header {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
-.prompt {
-    color: var(--terminal-prompt);
-    font-weight: 700;
-}
-
-.command {
-    color: var(--terminal-command);
-}
-
-/* Featured */
-.featured {
+.featured-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--space-md);
-    margin-bottom: var(--space-2xl);
 }
 
-.featured-card {
+.more-link {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+    align-items: center;
+    gap: var(--space-md);
     text-decoration: none;
     color: inherit;
-    border-color: var(--accent-dim);
 }
 
-.featured-card:hover {
+.more-link:hover {
     text-decoration: none;
 }
 
-.featured-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.featured-badge {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+.more-icon {
+    font-size: 1.3rem;
     color: var(--accent);
-}
-
-.featured-card:hover .repo-arrow {
-    opacity: 1;
-}
-
-.featured-name {
-    font-size: 1.15rem;
-}
-
-.featured-tagline {
-    font-size: 0.87rem;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    flex: 1;
-}
-
-.github-header {
-    margin-bottom: var(--space-lg);
-}
-
-/* Grid */
-.repos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: var(--space-md);
-}
-
-.repo-card {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    cursor: pointer;
-}
-
-.repo-card:hover {
-    text-decoration: none;
-}
-
-.repo-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.repo-name-row {
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
+    justify-content: center;
+    background: var(--accent-glow);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
 }
 
-.pin-badge {
-    font-size: 0.75rem;
+.more-title {
+    font-size: 0.95rem;
 }
 
-.repo-name {
-    font-size: 1rem;
-    color: var(--accent-secondary);
-    font-weight: 600;
+.more-sub {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
 }
 
-.repo-arrow {
+.more-arrow {
+    margin-left: auto;
     color: var(--text-muted);
-    font-size: 0.85rem;
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-}
-
-.repo-card:hover .repo-arrow {
-    opacity: 1;
-}
-
-.repo-desc {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    flex: 1;
-}
-
-.repo-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: auto;
-}
-
-.repo-lang {
-    display: flex;
-    align-items: center;
-    gap: 0.35em;
-}
-
-.lang-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.repo-stat {
-    display: flex;
-    align-items: center;
-    gap: 0.2em;
-}
-
-/* Loading */
-.loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-3xl);
-}
-
-.loading-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.loading-dots span {
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 1.2s ease-in-out infinite;
-}
-
-.loading-dots span:nth-child(2) {
-    animation-delay: 0.15s;
-}
-
-.loading-dots span:nth-child(3) {
-    animation-delay: 0.3s;
-}
-
-@keyframes pulse {
-
-    0%,
-    80%,
-    100% {
-        opacity: 0.3;
-        transform: scale(0.8);
-    }
-
-    40% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.loading-text {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-/* Error */
-.error-state {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    align-items: flex-start;
-}
-
-.error-text {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-}
-
-.error-marker {
-    color: var(--terminal-error);
-    font-weight: 700;
-}
-
-.retry-btn {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    background: none;
-    border: 1px solid var(--border-primary);
-    color: var(--text-secondary);
-    padding: 0.4rem 0.8rem;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: border-color var(--transition-fast), color var(--transition-fast);
-}
-
-.retry-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
 }
 
 @media (max-width: 640px) {
-    .repos-grid,
-    .featured {
+    .featured-grid {
         grid-template-columns: 1fr;
     }
 }

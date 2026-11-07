@@ -1,7 +1,7 @@
 /**
- * Featured work — case studies for closed-source products.
- * Only public information (the product's public page) plus my own role.
- * No screenshots, customer data, numbers or internal system names.
+ * Featured work — case studies.
+ * Employer products (Tomax): only public information (product page / store listings) plus my own role.
+ * No screenshots, customer data, numbers, internal system names or launch timelines.
  */
 
 export interface CaseStudy {
@@ -11,8 +11,13 @@ export interface CaseStudy {
     tagline: string
     role: string
     links?: { label: string; url: string }[]
+    problemTitle?: string
     problem?: string[]
+    /** Short label on cards, e.g. "Tomax" or "Own product" */
+    badge: string
     flowTitle: string
+    /** 'steps' = vertical chain with arrows (pipelines, timelines); 'grid' = side-by-side uses */
+    flowStyle: 'steps' | 'grid'
     flow: { title: string; detail: string }[]
     built: string[]
     stack: string[]
@@ -33,7 +38,9 @@ export const featured: CaseStudy[] = [
             'AI-detection scores are probabilities — they don\'t show what a student actually understands.',
             'Live oral exams do, but they take more time than most courses can spare.'
         ],
+        badge: 'Tomax',
         flowTitle: 'How it works',
+        flowStyle: 'steps',
         flow: [
             { title: 'Set up', detail: 'Instructor uploads the assignment; AI drafts questions and weighted rubrics, the instructor reviews and edits.' },
             { title: 'Defend', detail: 'Student submits the work, then records 2–5 short video answers, each with prep time.' },
@@ -51,6 +58,40 @@ export const featured: CaseStudy[] = [
         note: 'Closed-source product. Details here come from Tomax\'s public product page; screens and internals are confidential.'
     },
     {
+        slug: 'tsubermango',
+        name: 'TsuberMango',
+        company: 'Independent',
+        badge: 'Own product · in production',
+        tagline:
+            'The system a mango sorting warehouse runs its season on: pallet intake and weighing, shipping certificates and a live cold-room map — built for the people on the floor, on tablets, in Hebrew.',
+        role: 'Designed, built and run it end to end, working directly with the sorting center that uses it.',
+        problemTitle: 'Why it started on Google Sheets',
+        problem: [
+            'The warehouse already ran on spreadsheets, and a new system had to earn its place mid-season without breaking that.',
+            'So version one wrote straight into the farmers\' own Google Sheets: nothing about their existing flow changed, and if the app wasn\'t for them, all their data was still exactly where it had always been.',
+            'Once it proved itself, it moved to a real database — without a rewrite, because the app never talked to Sheets directly.'
+        ],
+        flowTitle: 'How it evolved',
+        flowStyle: 'steps',
+        flow: [
+            { title: 'Nov 2024', detail: 'First version on Google Sheets: pallet intake and weighing form, editable pallet table, shipping labels and printable stickers.' },
+            { title: '2025 season', detail: 'Google sign-in with roles, live updates between devices, destination summaries, and an admin screen for farmers, varieties, sizes and destinations.' },
+            { title: 'Mid 2026', detail: 'Records moved to Firestore behind a storage-agnostic repository layer; Firebase Auth; a multi-tenant data model so one codebase can serve several sorting centers.' },
+            { title: 'Oct 2026', detail: 'Sheets retired to a cold archive. Shipping certificates (issue, reprint, auto-split, merged PDF, Excel export), scheduled backups with a restore tool, and a season-reset flow.' },
+            { title: 'Now', detail: 'A live cold-room map: drag pallets into fridge slots and every connected tablet sees the move instantly.' }
+        ],
+        built: [
+            'A Vue 3 + Tailwind app designed for warehouse tablets, fully in Hebrew (RTL), with Hebrew PDF generation for stickers and certificates.',
+            'An Express API on Google Cloud Run with Firebase Auth; every write goes through the backend, while clients read live updates gated by Firestore security rules.',
+            'The repository layer that made the Sheets → Firestore migration a swap rather than a rewrite.',
+            'Real-time sync with echo suppression, so two tablets — even on the same account — see each other\'s changes immediately.',
+            'Operational safety for a business that can\'t lose a season: weight sanity checks, soft delete with an audit log, all-or-nothing scheduled backups, and dry-run-by-default restore and reset tools.',
+            'Tests at every level: unit tests (Vitest), API tests against the Firebase emulators, and Playwright end-to-end tests including a tablet viewport.'
+        ],
+        stack: ['Vue 3', 'Tailwind CSS', 'Node.js', 'Express', 'Firestore', 'Firebase Auth', 'Cloud Run', 'Google Sheets API', 'Playwright', 'Vitest'],
+        note: 'Built for a real sorting center and used through the mango season. Business details are kept general.'
+    },
+    {
         slug: 'tomax-vix',
         name: 'Tomax Vix',
         company: 'Tomax',
@@ -61,7 +102,9 @@ export const featured: CaseStudy[] = [
             { label: 'App Store ↗', url: 'https://apps.apple.com/il/app/tomax-vix/id1622031042' },
             { label: 'Google Play ↗', url: 'https://play.google.com/store/apps/details?id=com.tomax.mobile' }
         ],
+        badge: 'Tomax',
         flowTitle: 'What it\'s used for',
+        flowStyle: 'grid',
         flow: [
             { title: 'Scan', detail: 'Capture handwritten notebook pages and submit them digitally with the exam.' },
             { title: 'Second camera', detail: 'A phone or tablet becomes an extra view of the candidate during high-stakes exams.' },
@@ -75,5 +118,32 @@ export const featured: CaseStudy[] = [
         ],
         stack: ['React Native', 'iOS', 'Android', 'App Store Connect', 'Google Play Console'],
         note: 'Closed-source product. Details here come from its public store listings; internals are confidential.'
+    },
+    {
+        slug: 'signmyname',
+        name: 'SignMyName',
+        company: 'Shenkar College',
+        badge: 'B.Sc. final project · open source',
+        tagline:
+            'A desktop app that teaches children Israeli Sign Language through real-time webcam gesture recognition. Final project of my B.Sc. — grade 95, top project in the class.',
+        role: 'Lead developer of the application, in a team of three.',
+        links: [{ label: 'GitHub ↗', url: 'https://github.com/Sign-My-Name' }],
+        flowTitle: 'How recognition works',
+        flowStyle: 'steps',
+        flow: [
+            { title: 'Capture', detail: 'Webcam frames come in through OpenCV.' },
+            { title: 'Detect & crop', detail: 'MediaPipe finds the hand and the app crops it in real time.' },
+            { title: 'Classify', detail: 'A CNN (TensorFlow) predicts which Israeli Sign Language letter is being signed.' },
+            { title: 'Vote', detail: 'A sliding-window vote over recent predictions spells words letter by letter, without flicker.' },
+            { title: 'Teach', detail: 'Four game-like learning screens: learn a letter, practise, build a word, learn words.' }
+        ],
+        built: [
+            'The application itself: real-time hand detection and cropping, CNN inference, and the sliding-window vote for spelling words.',
+            'An auto-update mechanism that pulls new model versions from GitHub, so improved models reach users without a reinstall.',
+            'Trained on a self-collected dataset of 50,000+ images and evaluated through a 62-participant user study.',
+            'Presented and defended before an academic committee that included an ML expert.'
+        ],
+        stack: ['Python', 'TensorFlow', 'OpenCV', 'MediaPipe', 'CNN', 'Tkinter'],
+        note: 'Open source (MIT).'
     }
 ]

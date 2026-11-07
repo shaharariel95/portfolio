@@ -2,13 +2,8 @@
     <div v-if="study" class="study-page">
         <ShellBreadcrumb />
 
-        <div class="section-header">
-            <span class="prompt">$</span>
-            <span class="command">cat {{ study.slug }}.md</span>
-        </div>
-
         <header class="study-header">
-            <p class="study-company">{{ study.company }} · featured work</p>
+            <p class="study-company">{{ study.badge }}</p>
             <h1 class="study-name">{{ study.name }}</h1>
             <p class="study-tagline">{{ study.tagline }}</p>
             <p class="study-role"><span class="label">role:</span> {{ study.role }}</p>
@@ -19,15 +14,15 @@
         </header>
 
         <section v-if="study.problem?.length" class="study-section" aria-labelledby="problem-h">
-            <h2 id="problem-h" class="section-title"><span class="hash">#</span> The problem</h2>
+            <h2 id="problem-h" class="section-title"><span class="hash">#</span>{{ study.problemTitle ?? 'The problem' }}</h2>
             <ul class="bullets">
                 <li v-for="(p, i) in study.problem" :key="i">{{ p }}</li>
             </ul>
         </section>
 
         <section class="study-section" aria-labelledby="flow-h">
-            <h2 id="flow-h" class="section-title"><span class="hash">#</span> {{ study.flowTitle }}</h2>
-            <ol class="flow" :class="{ pipeline: study.slug === 'vivago' }">
+            <h2 id="flow-h" class="section-title"><span class="hash">#</span>{{ study.flowTitle }}</h2>
+            <ol class="flow" :class="{ pipeline: study.flowStyle === 'steps' }">
                 <li v-for="(step, i) in study.flow" :key="i" class="flow-step card">
                     <span class="flow-index">{{ String(i + 1).padStart(2, '0') }}</span>
                     <h3 class="flow-title">{{ step.title }}</h3>
@@ -37,14 +32,14 @@
         </section>
 
         <section class="study-section" aria-labelledby="built-h">
-            <h2 id="built-h" class="section-title"><span class="hash">#</span> What I built</h2>
+            <h2 id="built-h" class="section-title"><span class="hash">#</span>What I built</h2>
             <ul class="bullets">
                 <li v-for="(b, i) in study.built" :key="i">{{ b }}</li>
             </ul>
         </section>
 
         <section class="study-section" aria-labelledby="stack-h">
-            <h2 id="stack-h" class="section-title"><span class="hash">#</span> Stack</h2>
+            <h2 id="stack-h" class="section-title"><span class="hash">#</span>Stack</h2>
             <div class="tags">
                 <span v-for="t in study.stack" :key="t" class="tag">{{ t }}</span>
             </div>
@@ -52,7 +47,10 @@
 
         <p class="study-note">// {{ study.note }}</p>
 
-        <NuxtLink to="/projects" class="back-link"><span class="prompt">$</span> cd ..</NuxtLink>
+        <nav class="study-nav" aria-label="More case studies">
+            <NuxtLink to="/projects" class="back-link"><span class="prompt">$</span> cd ..</NuxtLink>
+            <NuxtLink v-if="next" :to="`/projects/${next.slug}`" class="back-link">next: {{ next.name }} →</NuxtLink>
+        </nav>
     </div>
 </template>
 
@@ -61,7 +59,9 @@ import { cvData } from '~/utils/cv'
 import { featured } from '~/utils/featured'
 
 const route = useRoute()
-const study = featured.find(f => f.slug === route.params.slug)
+const index = featured.findIndex(f => f.slug === route.params.slug)
+const study = featured[index]
+const next = featured[(index + 1) % featured.length]
 
 if (!study) {
     throw createError({ statusCode: 404, statusMessage: 'No such file or directory', fatal: true })
@@ -80,22 +80,9 @@ useHead({
     gap: var(--space-xl);
 }
 
-.section-header {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    margin-bottom: calc(-1 * var(--space-md));
-}
-
 .prompt {
     color: var(--terminal-prompt);
     font-weight: 700;
-}
-
-.command {
-    color: var(--terminal-command);
 }
 
 .study-header {
@@ -147,14 +134,6 @@ useHead({
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-}
-
-.section-title {
-    font-size: 1.05rem;
-}
-
-.hash {
-    color: var(--accent);
 }
 
 .bullets {
@@ -243,11 +222,19 @@ useHead({
     color: var(--text-muted);
 }
 
+.study-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-secondary);
+}
+
 .back-link {
     font-family: var(--font-mono);
     font-size: 0.9rem;
     color: var(--text-secondary);
-    align-self: flex-start;
 }
 
 .back-link:hover {

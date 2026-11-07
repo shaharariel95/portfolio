@@ -2,12 +2,10 @@
     <div class="contact-page">
         <ShellBreadcrumb />
 
-        <div class="page-header">
-            <div class="section-header">
-                <span class="prompt">$</span>
-                <span class="command">cat contact.txt</span>
-            </div>
-        </div>
+        <header class="page-header">
+            <h1 class="page-title">Contact</h1>
+            <p class="page-lead">The fastest way to reach me is email. My CV is here too.</p>
+        </header>
 
         <div class="contact-grid">
             <a :href="`mailto:${cvData.contact.email}`" class="contact-item card">
@@ -55,7 +53,7 @@
 
         <div class="location-note">
             <span class="prompt">$</span>
-            <span class="note-text">echo "Based in {{ cvData.location }}"</span>
+            <span class="note-text">echo "Based in {{ cvData.location }} · {{ cvData.languages }}"</span>
         </div>
     </div>
 </template>
@@ -84,14 +82,6 @@ const websiteHostname = computed(() => {
 
 .page-header {
     margin-bottom: var(--space-xl);
-}
-
-.section-header {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
 }
 
 .prompt {

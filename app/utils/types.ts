@@ -9,7 +9,11 @@ export interface Experience {
     company: string
     role: string
     dates: string
+    /** Optional sub-groups (e.g. one product) — rendered as titled bullet lists */
+    groups?: { title: string; bullets: string[] }[]
     bullets: string[]
+    /** Shown compactly under "Earlier" on the site; full detail stays on the CV */
+    earlier?: boolean
 }
 
 export interface Education {
@@ -19,42 +23,22 @@ export interface Education {
     note?: string
 }
 
-export interface Project {
-    name: string
-    description: string
-    tech: string[]
-    highlights: string[]
+export interface SkillGroup {
+    label: string
+    items: string[]
 }
 
 export interface CVData {
     name: string
     role: string
+    degree: string
+    tagline: string
+    proofPoints: string[]
     summary: string
     location: string
+    languages: string
     contact: ContactInfo
-    skills: string[]
+    skillGroups: SkillGroup[]
     experience: Experience[]
     education: Education[]
-    projects: Project[]
-}
-
-export interface GitHubRepo {
-    id: number
-    name: string
-    full_name: string
-    html_url: string
-    description: string | null
-    language: string | null
-    stargazers_count: number
-    forks_count: number
-    topics: string[]
-    updated_at: string
-    created_at: string
-}
-
-export interface ProjectConfig {
-    /** Repos to pin at the top of the projects page */
-    pinned: string[]
-    /** Repos to hide from the projects page */
-    hidden: string[]
 }

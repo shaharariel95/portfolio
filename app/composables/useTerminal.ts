@@ -1,5 +1,4 @@
 import { cvData } from '~/utils/cv'
-import { projectConfig } from '~/utils/projects.config'
 import { featured } from '~/utils/featured'
 
 interface TerminalLine {
@@ -93,18 +92,15 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         '',
         cvData.summary,
         '',
-        `📍 ${cvData.location}`
+        `📍 ${cvData.location}  ·  ${cvData.languages}`
     ],
 
     skills: () => {
-        const rows: string[] = ['Tech Stack:', '']
-        const perRow = 3
-        const skills = cvData.skills || []
-        for (let i = 0; i < skills.length; i += perRow) {
-            const chunk = skills.slice(i, i + perRow)
-            rows.push('  ' + chunk.map(s => s.padEnd(20)).join(''))
+        const lines: string[] = ['Tech Stack:', '']
+        for (const g of cvData.skillGroups) {
+            lines.push(`  ${g.label.padEnd(18)} ${g.items.join(', ')}`)
         }
-        return rows
+        return lines
     },
 
     experience: () => {
@@ -113,7 +109,7 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
         for (const job of exp) {
             lines.push(`┌─ ${job.company}`)
             lines.push(`│  ${job.role}  (${job.dates})`)
-            const bullets = job.bullets || []
+            const bullets = [...(job.groups ?? []).flatMap(g => g.bullets), ...job.bullets]
             for (const b of bullets.slice(0, 3)) {
                 lines.push(`│  ▸ ${b}`)
             }
@@ -138,29 +134,12 @@ const COMMANDS: Record<string, (args?: string[]) => string[]> = {
     projects: () => {
         const lines: string[] = ['Featured Work:', '']
         for (const f of featured) {
-            lines.push(`  ★ ${f.name}  (${f.company})`)
+            lines.push(`  ★ ${f.name}  (${f.badge})`)
             lines.push(`     ${f.tagline}`)
             lines.push(`     → cat ${f.slug}.md  ·  shaharariel.dev/projects/${f.slug}`)
             lines.push('')
         }
-        lines.push('Projects:', '')
-        const projs = cvData.projects || []
-        for (const p of projs) {
-            lines.push(`  📌 ${p.name}`)
-            lines.push(`     ${p.description}`)
-            lines.push(`     [${(p.tech || []).join(', ')}]`)
-            lines.push('')
-        }
-        const pinned = projectConfig.pinned || []
-        for (const name of pinned) {
-            // Special case for SignMyName (repo is Sign-My-Name/tkinter)
-            const displayName = name === 'Sign-My-Name/tkinter' ? 'SignMyName' : name
-            if (!projs.find(p => p.name === displayName)) {
-                lines.push(`  ⭐ ${displayName}`)
-                lines.push(`     → github.com/${name.includes('/') ? name : 'shaharariel95/' + name}`)
-                lines.push('')
-            }
-        }
+        lines.push(`More: github.com/${cvData.contact.github}`)
         return lines
     },
 

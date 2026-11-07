@@ -2,15 +2,13 @@
     <div class="experience-page">
         <ShellBreadcrumb />
 
-        <div class="page-header">
-            <div class="section-header">
-                <span class="prompt">$</span>
-                <span class="command">cat experience.log</span>
-            </div>
-        </div>
+        <header class="page-header">
+            <h1 class="page-title">Experience</h1>
+            <p class="page-lead">{{ cvData.summary }}</p>
+        </header>
 
-        <div class="timeline">
-            <article v-for="(job, i) in cvData.experience" :key="i" class="job card">
+        <section class="timeline" aria-label="Work experience">
+            <article v-for="(job, i) in jobs" :key="i" class="job card">
                 <div class="job-top">
                     <div>
                         <h2 class="company">{{ job.company }}</h2>
@@ -19,43 +17,45 @@
                     <span class="dates">{{ job.dates }}</span>
                 </div>
 
-                <ul class="bullets">
+                <div v-for="g in job.groups" :key="g.title" class="group">
+                    <h3 class="group-title">{{ g.title }}</h3>
+                    <ul class="bullets">
+                        <li v-for="(b, j) in g.bullets" :key="j">{{ b }}</li>
+                    </ul>
+                </div>
+
+                <ul v-if="job.bullets.length" class="bullets">
                     <li v-for="(b, j) in job.bullets" :key="j">{{ b }}</li>
-                </ul>
-
-                <!-- Filesystem-style separator -->
-                <div v-if="i < cvData.experience.length - 1" class="separator">
-                    <span class="sep-line" />
-                    <span class="sep-label">{{ '. .' }}</span>
-                    <span class="sep-line" />
-                </div>
-            </article>
-        </div>
-
-        <section class="education" aria-label="Education">
-            <div class="section-header">
-                <span class="prompt">$</span>
-                <span class="command">cat education.log</span>
-            </div>
-            <article v-for="(ed, i) in cvData.education" :key="i" class="job card">
-                <div class="job-top">
-                    <div>
-                        <h2 class="company">{{ ed.degree }}</h2>
-                        <p class="position">{{ ed.school }}</p>
-                    </div>
-                    <span class="dates">{{ ed.dates }}</span>
-                </div>
-                <ul v-if="ed.note" class="bullets">
-                    <li>{{ ed.note }}</li>
                 </ul>
             </article>
         </section>
 
-        <div class="cv-row">
-            <a href="/cv.pdf" target="_blank" rel="noopener" class="cv-link">
-                <span class="prompt">$</span> open cv.pdf <span class="caret" />
-            </a>
-        </div>
+        <section class="section" aria-labelledby="edu-h">
+            <h2 id="edu-h" class="section-title"><span class="hash">#</span>Education</h2>
+            <article v-for="(ed, i) in cvData.education" :key="i" class="job card">
+                <div class="job-top">
+                    <div>
+                        <h3 class="company">{{ ed.degree }}</h3>
+                        <p class="position">{{ ed.school }}</p>
+                    </div>
+                    <span class="dates">{{ ed.dates }}</span>
+                </div>
+                <p v-if="ed.note" class="edu-note">
+                    {{ ed.note }} — <NuxtLink to="/projects/signmyname">read the case study</NuxtLink>
+                </p>
+            </article>
+        </section>
+
+        <section class="section" aria-labelledby="earlier-h">
+            <h2 id="earlier-h" class="section-title"><span class="hash">#</span>Earlier</h2>
+            <ul class="earlier">
+                <li v-for="(job, i) in earlier" :key="i">
+                    <span class="dates">{{ job.dates }}</span>
+                    <span><strong>{{ job.role }}</strong> — {{ job.company }}</span>
+                </li>
+            </ul>
+            <p class="earlier-note">Full detail on the <a href="/cv.pdf" target="_blank" rel="noopener">CV (PDF)</a>.</p>
+        </section>
     </div>
 </template>
 
@@ -65,44 +65,28 @@ import { cvData } from '~/utils/cv'
 useHead({
     title: `Experience — ${cvData.name}`
 })
+
+const jobs = cvData.experience.filter(j => !j.earlier)
+const earlier = cvData.experience.filter(j => j.earlier)
 </script>
 
 <style scoped>
 .experience-page {
     display: flex;
     flex-direction: column;
+    gap: var(--space-2xl);
 }
 
-.page-header {
-    margin-bottom: var(--space-xl);
+.page-lead {
+    line-height: 1.7;
+    max-width: 680px;
 }
 
-.section-header {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
-.prompt {
-    color: var(--terminal-prompt);
-    font-weight: 700;
-}
-
-.command {
-    color: var(--terminal-command);
-}
-
-/* Timeline */
-.timeline {
+.timeline,
+.section {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
-}
-
-.job {
-    position: relative;
+    gap: var(--space-md);
 }
 
 .job-top {
@@ -132,9 +116,21 @@ useHead({
     white-space: nowrap;
 }
 
+.group + .group,
+.group + .bullets {
+    margin-top: var(--space-lg);
+}
+
+.group-title {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-heading);
+    margin-bottom: var(--space-sm);
+}
+
 .bullets {
     list-style: none;
-    padding: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
@@ -155,55 +151,45 @@ useHead({
     color: var(--accent);
 }
 
-/* Education + CV link */
-.education {
+.edu-note {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.earlier {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    margin-top: var(--space-2xl);
-}
-
-.cv-row {
-    margin-top: var(--space-xl);
-}
-
-.cv-link {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-}
-
-.cv-link:hover {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-/* Separator */
-.separator {
-    display: flex;
-    align-items: center;
     gap: var(--space-sm);
-    margin-top: var(--space-lg);
+}
+
+.earlier li {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-md);
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.earlier strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.earlier-note {
+    font-size: 0.8rem;
     color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-}
-
-.sep-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border-primary);
-}
-
-.sep-label {
-    letter-spacing: 0.15em;
 }
 
 @media (max-width: 640px) {
     .job-top {
         flex-direction: column;
         gap: var(--space-xs);
+    }
+
+    .earlier li {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 }
 </style>
